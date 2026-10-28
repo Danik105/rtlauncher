@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RT Launcher</title>
+<meta name="description" content="Открыть игру в RT Launcher">
+<meta property="og:title" content="Игра в RT Launcher">
+<meta property="og:description" content="Нажмите, чтобы открыть страницу игры в RT Launcher">
+<style>
+:root{--bg:#0f1115;--card:#171a21;--line:#262a34;--text:#e6e8ee;--muted:#9aa0ad;--accent:#e85d04}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:15px/1.5 "Segoe UI",system-ui,sans-serif}
+body{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px 16px}
+.card{width:100%;max-width:440px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:32px 28px;text-align:center}
+.logo{width:56px;height:56px;margin:0 auto 18px;border-radius:14px;background:var(--accent);display:flex;align-items:center;justify-content:center}
+.logo svg{width:28px;height:28px}
+.kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+h1{font-size:22px;line-height:1.3;margin:6px 0 10px;word-break:break-word}
+p{color:var(--muted);margin:0 0 22px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px 18px;border-radius:12px;font:600 15px "Segoe UI",system-ui,sans-serif;text-decoration:none;border:1px solid var(--line);color:var(--text);background:transparent;cursor:pointer;margin-top:10px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn:hover{filter:brightness(1.12)}
+.small{font-size:13px;margin-top:22px;margin-bottom:0}
+.small a{color:var(--muted)}
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="logo"><svg viewBox="0 0 24 24" fill="#fff"><path d="M6 3.5v17a1 1 0 0 0 1.5.86l14-8.5a1 1 0 0 0 0-1.72l-14-8.5A1 1 0 0 0 6 3.5z"/></svg></div>
+  <div class="kicker">С вами поделились игрой</div>
+  <h1 id="title">Игра</h1>
+  <p id="hint">Браузер спросит, открыть ли RT Launcher, — разрешите, и страница игры откроется в лаунчере.</p>
+  <a class="btn primary" id="open" href="#">Открыть в RT Launcher</a>
+  <a class="btn" href="https://github.com/Danik105/rtlauncher/releases/latest">Нет лаунчера? Скачать</a>
+  <a class="btn" id="source" href="#" target="_blank" rel="noopener">Страница раздачи</a>
+  <p class="small">Ссылка не открывается? Запустите RT Launcher один раз — он сам научит Windows открывать такие ссылки.</p>
+</main>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var t = (q.get("t") || "").replace(/\D/g, "");
+  var ofx = q.get("ofx") || "";
+  var name = (q.get("n") || "").slice(0, 200);
+  if (name) {
+    document.getElementById("title").textContent = name;
+    document.title = name + " — RT Launcher";
+  }
+  var src = document.getElementById("source");
+  var open = document.getElementById("open");
+  if (!t && !/^[\w\-\/.]+\.html$/.test(ofx)) {
+    document.getElementById("title").textContent = "Ссылка повреждена";
+    document.getElementById("hint").textContent = "В ней нет игры. Попросите отправить ссылку ещё раз.";
+    open.style.display = src.style.display = "none";
+    return;
+  }
+  var params = (t ? "t=" + t : "ofx=" + encodeURIComponent(ofx)) + (name ? "&n=" + encodeURIComponent(name) : "");
+  var app = "rtlauncher://game?" + params;
+  open.href = app;
+  src.href = t ? "https://rutracker.org/forum/viewtopic.php?t=" + t : "https://online-fix.me/" + ofx;
+  setTimeout(function () { location.href = app; }, 300);
+})();
+</script>
+</body>
+</html>
