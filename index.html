@@ -3,62 +3,557 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RT Launcher</title>
-<meta name="description" content="Открыть игру в RT Launcher">
-<meta property="og:title" content="Игра в RT Launcher">
-<meta property="og:description" content="Нажмите, чтобы открыть страницу игры в RT Launcher">
+<title>RT Launcher — игры с RuTracker в одном окне</title>
+<meta name="description" content="Лаунчер игр в духе Steam: каталог RuTracker с обложками и скриншотами, скачивание в один клик через qBittorrent, автоматическая установка, библиотека, достижения.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="RT Launcher">
+<meta property="og:description" content="Каталог RuTracker, загрузка и библиотека игр в одном окне. Бесплатно, для Windows 10 и 11.">
+<meta property="og:image" content="https://danik105.github.io/rtlauncher/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b0c10">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0f1115;--card:#171a21;--line:#262a34;--text:#e6e8ee;--muted:#9aa0ad;--accent:#e85d04}
+:root{
+  --bg:#0b0c10;--bg2:#101218;--card:#14171e;--card2:#191c25;--line:#232733;--line2:#2e3342;
+  --text:#eceef3;--muted:#9aa1b0;--dim:#6d7486;--acc:#e85d04;--acc2:#ff7a1a;--ok:#3ecf8e;
+  --r:18px;--max:1180px;
+}
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:15px/1.5 "Segoe UI",system-ui,sans-serif}
-body{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px 16px}
-.card{width:100%;max-width:440px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:32px 28px;text-align:center}
-.logo{width:56px;height:56px;margin:0 auto 18px;border-radius:14px;background:var(--accent);display:flex;align-items:center;justify-content:center}
-.logo svg{width:28px;height:28px}
-.kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
-h1{font-size:22px;line-height:1.3;margin:6px 0 10px;word-break:break-word}
-p{color:var(--muted);margin:0 0 22px}
-.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px 18px;border-radius:12px;font:600 15px "Segoe UI",system-ui,sans-serif;text-decoration:none;border:1px solid var(--line);color:var(--text);background:transparent;cursor:pointer;margin-top:10px}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn:hover{filter:brightness(1.12)}
-.small{font-size:13px;margin-top:22px;margin-bottom:0}
-.small a{color:var(--muted)}
+html{scroll-behavior:smooth}
+html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 Inter,"Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{overflow-x:hidden}
+a{color:inherit}
+img{max-width:100%;height:auto;display:block}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+@media (max-width:640px){.wrap{padding:0 16px}}
+
+/* ── Шапка ── */
+header{position:sticky;top:0;z-index:20;background:rgba(11,12,16,.78);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.05)}
+.nav{display:flex;align-items:center;gap:20px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;text-decoration:none;letter-spacing:-.01em}
+.brand img{width:32px;height:32px;border-radius:9px}
+.nav nav{display:flex;gap:22px;margin-left:12px}
+.nav nav a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500}
+.nav nav a:hover{color:var(--text)}
+.nav .sp{flex:1}
+.lang{position:relative}
+.lang button{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:7px 11px;font:600 13px Inter,sans-serif;cursor:pointer}
+.lang ul{position:absolute;right:0;top:calc(100% + 6px);list-style:none;margin:0;padding:6px;background:var(--card2);border:1px solid var(--line2);border-radius:12px;min-width:150px;display:none;box-shadow:0 20px 40px -10px rgba(0,0,0,.6)}
+.lang.open ul{display:block}
+.lang li button{width:100%;border:0;background:none;justify-content:flex-start;padding:8px 10px;font-weight:500}
+.lang li button:hover,.lang li button.on{background:var(--line)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:13px 22px;border-radius:13px;font:700 15px Inter,sans-serif;text-decoration:none;border:1px solid var(--line2);color:var(--text);background:var(--card);cursor:pointer;transition:transform .15s,filter .15s,background .15s;white-space:nowrap}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.1)}
+.btn.primary{background:linear-gradient(180deg,var(--acc2),var(--acc));border-color:transparent;color:#fff;box-shadow:0 12px 30px -8px rgba(232,93,4,.65)}
+.btn.sm{padding:8px 14px;font-size:13px;border-radius:10px}
+.btn.big{padding:17px 30px;font-size:17px;border-radius:15px}
+.btn svg{width:18px;height:18px;flex-shrink:0}
+@media (max-width:860px){.nav nav{display:none}}
+@media (max-width:420px){.nav .btn.sm span{display:none}}
+
+/* ── Поделились игрой ── */
+.shared{margin:24px auto 0;max-width:var(--max);padding:0 24px}
+.shared .box{display:flex;align-items:center;gap:18px;padding:18px 20px;border-radius:var(--r);background:linear-gradient(90deg,rgba(232,93,4,.16),rgba(232,93,4,.04));border:1px solid rgba(232,93,4,.35)}
+.shared .ic{width:46px;height:46px;border-radius:13px;background:var(--acc);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.shared .ic svg{width:22px;height:22px}
+.shared .t{flex:1;min-width:0}
+.shared .k{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--acc2);font-weight:700}
+.shared h2{margin:2px 0 0;font-size:19px;line-height:1.3;word-break:break-word}
+.shared .hint{color:var(--muted);font-size:13px;margin-top:4px}
+.shared .acts{display:flex;gap:8px;flex-wrap:wrap}
+@media (max-width:720px){.shared{padding:0 16px}.shared .box{flex-wrap:wrap}.shared .acts{width:100%}.shared .acts .btn{flex:1}}
+
+/* ── Первый экран ── */
+.hero{position:relative;padding:72px 0 40px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-200px -20% auto;height:720px;background:radial-gradient(closest-side,rgba(232,93,4,.30),transparent 70%);filter:blur(20px);pointer-events:none}
+.hero .hgrid{position:relative;display:grid;grid-template-columns:1fr 1.15fr;gap:48px;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:99px;background:rgba(255,255,255,.05);border:1px solid var(--line2);font-size:13px;color:var(--muted);font-weight:500}
+.badge i{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px rgba(62,207,142,.15)}
+h1{font-size:clamp(36px,5.2vw,62px);line-height:1.04;letter-spacing:-.035em;margin:18px 0 18px;font-weight:800}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--acc2),#ffb15c);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:18px;color:var(--muted);max-width:520px;margin:0 0 28px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.meta{margin-top:14px;font-size:13px;color:var(--dim);display:flex;gap:14px;flex-wrap:wrap}
+.meta span{display:inline-flex;align-items:center;gap:6px}
+.meta svg{width:14px;height:14px}
+.shot{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line2);background:#000;box-shadow:0 50px 100px -30px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.03),0 30px 80px -40px rgba(232,93,4,.55);transform:perspective(2000px) rotateY(-4deg) rotateX(2deg);transition:transform .5s}
+.shot:hover{transform:perspective(2000px) rotateY(-1deg)}
+.shot .bar{display:flex;align-items:center;gap:7px;height:30px;padding:0 12px;background:#15171d;border-bottom:1px solid var(--line)}
+.shot .bar b{width:10px;height:10px;border-radius:50%;background:#2c303b}
+.shot .bar span{margin-left:8px;font-size:11px;color:var(--dim)}
+@media (max-width:960px){.hero{padding:44px 0 20px}.hero .hgrid{grid-template-columns:1fr;gap:36px}.shot{transform:none}.shot:hover{transform:none}}
+
+/* ── Цифры ── */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:30px auto 0}
+.stat{padding:18px 20px;border-radius:var(--r);background:var(--card);border:1px solid var(--line)}
+.stat b{display:block;font-size:26px;letter-spacing:-.02em}
+.stat span{color:var(--muted);font-size:13px}
+@media (max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+/* ── Секции ── */
+section.sec{padding:84px 0 0}
+.kick{color:var(--acc2);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.1em}
+h2.title{font-size:clamp(28px,3.6vw,42px);letter-spacing:-.03em;line-height:1.1;margin:10px 0 12px}
+.sub{color:var(--muted);max-width:640px;margin:0 0 36px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feat{padding:24px;border-radius:var(--r);background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);transition:border-color .2s,transform .2s}
+.feat:hover{border-color:rgba(232,93,4,.45);transform:translateY(-2px)}
+.feat .fi{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(232,93,4,.13);color:var(--acc2);margin-bottom:16px}
+.feat .fi svg{width:22px;height:22px}
+.feat h3{margin:0 0 6px;font-size:17px}
+.feat p{margin:0;color:var(--muted);font-size:14.5px}
+@media (max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.grid{grid-template-columns:1fr}}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
+.step{position:relative;padding:26px 24px 24px;border-radius:var(--r);background:var(--card);border:1px solid var(--line)}
+.step::before{counter-increment:s;content:counter(s);display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--acc);color:#fff;font-weight:800;margin-bottom:14px}
+.step h3{margin:0 0 6px;font-size:17px}
+.step p{margin:0;color:var(--muted);font-size:14.5px}
+@media (max-width:860px){.steps{grid-template-columns:1fr}}
+
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tab{padding:9px 16px;border-radius:99px;background:var(--card);border:1px solid var(--line);color:var(--muted);font:600 14px Inter,sans-serif;cursor:pointer}
+.tab.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.gallery{border-radius:16px;overflow:hidden;border:1px solid var(--line2);background:#000;cursor:zoom-in}
+.gallery img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.panel{padding:26px;border-radius:var(--r);background:var(--card);border:1px solid var(--line)}
+.panel h3{margin:0 0 14px;font-size:18px}
+.req{list-style:none;margin:0;padding:0}
+.req li{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:14.5px}
+.req li:first-child{border-top:0}
+.req svg{width:18px;height:18px;color:var(--ok);flex-shrink:0;margin-top:2px}
+.req b{display:block}
+.req span{color:var(--muted)}
+details{border-top:1px solid var(--line);padding:12px 0}
+details:first-of-type{border-top:0}
+summary{cursor:pointer;font-weight:600;font-size:15px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--acc2);font-weight:800;font-size:18px;line-height:1}
+details[open] summary::after{content:"–"}
+details p{margin:8px 0 0;color:var(--muted);font-size:14.5px}
+@media (max-width:860px){.two{grid-template-columns:1fr}}
+
+.final{margin:90px 0 0;padding:56px 28px;border-radius:24px;text-align:center;background:radial-gradient(120% 140% at 50% 0%,rgba(232,93,4,.35),transparent 60%),var(--card);border:1px solid var(--line2)}
+.final img{width:72px;height:72px;margin:0 auto 18px;border-radius:20px;box-shadow:0 20px 40px -10px rgba(232,93,4,.6)}
+.final h2{font-size:clamp(26px,3.4vw,38px);letter-spacing:-.03em;margin:0 0 10px}
+.final p{color:var(--muted);margin:0 0 26px}
+
+footer{margin-top:70px;padding:28px 0 40px;border-top:1px solid var(--line);color:var(--dim);font-size:13px}
+footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between}
+footer a{color:var(--muted)}
+
+.lb{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+.lb.on{display:flex}
+.lb img{max-height:92vh;border-radius:12px}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.shot,.btn,.feat{transition:none}}
 </style>
 </head>
 <body>
-<main class="card">
-  <div class="logo"><svg viewBox="0 0 24 24" fill="#fff"><path d="M6 3.5v17a1 1 0 0 0 1.5.86l14-8.5a1 1 0 0 0 0-1.72l-14-8.5A1 1 0 0 0 6 3.5z"/></svg></div>
-  <div class="kicker">С вами поделились игрой</div>
-  <h1 id="title">Игра</h1>
-  <p id="hint">Браузер спросит, открыть ли RT Launcher, — разрешите, и страница игры откроется в лаунчере.</p>
-  <a class="btn primary" id="open" href="#">Открыть в RT Launcher</a>
-  <a class="btn" href="https://github.com/Danik105/rtlauncher/releases/latest">Нет лаунчера? Скачать</a>
-  <a class="btn" id="source" href="#" target="_blank" rel="noopener">Страница раздачи</a>
-  <p class="small">Ссылка не открывается? Запустите RT Launcher один раз — он сам научит Windows открывать такие ссылки.</p>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top"><img src="assets/apple-touch-icon.png" alt="">RT Launcher</a>
+    <nav>
+      <a href="#features" data-i="nav.features">Возможности</a>
+      <a href="#how" data-i="nav.how">Как начать</a>
+      <a href="#screens" data-i="nav.screens">Скриншоты</a>
+      <a href="#faq" data-i="nav.faq">Вопросы</a>
+    </nav>
+    <div class="sp"></div>
+    <div class="lang" id="lang">
+      <button type="button" id="langBtn" aria-haspopup="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg><span id="langCur">RU</span></button>
+      <ul id="langList"></ul>
+    </div>
+    <a class="btn primary sm dl" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span data-i="dl.short">Скачать</span></a>
+  </div>
+</header>
+
+<div class="shared" id="shared" hidden>
+  <div class="box">
+    <div class="ic"><svg viewBox="0 0 24 24" fill="#fff"><path d="M6 3.5v17a1 1 0 0 0 1.5.86l14-8.5a1 1 0 0 0 0-1.72l-14-8.5A1 1 0 0 0 6 3.5z"/></svg></div>
+    <div class="t">
+      <div class="k" data-i="share.kick">С вами поделились игрой</div>
+      <h2 id="sharedTitle"></h2>
+      <div class="hint" data-i="share.hint">Браузер спросит, открыть ли RT Launcher, — разрешите. Нет лаунчера — скачайте ниже.</div>
+    </div>
+    <div class="acts">
+      <a class="btn primary sm" id="sharedOpen" href="#" data-i="share.open">Открыть в RT Launcher</a>
+      <a class="btn sm" id="sharedSrc" href="#" target="_blank" rel="noopener" data-i="share.src">Страница раздачи</a>
+    </div>
+  </div>
+</div>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hgrid">
+      <div>
+        <span class="badge"><i></i><span data-i="hero.badge">Бесплатно · Windows 10 и 11</span></span>
+        <h1 data-i="hero.title" data-html>Все игры RuTracker — <em>в одном лаунчере</em></h1>
+        <p class="lead" data-i="hero.lead">Каталог раздач с обложками и скриншотами, загрузка в один клик, автоматическая установка и библиотека с запуском игр — как в Steam, только для RuTracker.</p>
+        <div class="cta">
+          <a class="btn primary big dl" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span data-i="dl.main">Скачать для Windows</span></a>
+          <a class="btn" id="zip" href="https://github.com/Danik105/rtlauncher/releases/latest/download/RTLauncher.zip" data-i="dl.zip">Портативная версия (ZIP)</a>
+        </div>
+        <div class="meta">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span id="ver" data-i="meta.ver">Последняя версия</span></span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span data-i="meta.admin">Без прав администратора</span></span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span data-i="meta.auto">Обновляется сам</span></span>
+        </div>
+      </div>
+      <div class="shot">
+        <div class="bar"><b></b><b></b><b></b><span>RT Launcher</span></div>
+        <picture><source srcset="assets/home.webp" type="image/webp"><img src="assets/home.jpg" alt="RT Launcher" width="1600" height="1000"></picture>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="stats reveal">
+        <div class="stat"><b data-i="st1.b">1 клик</b><span data-i="st1.s">от карточки игры до загрузки</span></div>
+        <div class="stat"><b data-i="st2.b">Авто</b><span data-i="st2.s">распаковка, установщики, ISO</span></div>
+        <div class="stat"><b data-i="st3.b">Steam</b><span data-i="st3.s">обложки, скриншоты, требования</span></div>
+        <div class="stat"><b data-i="st4.b">5 языков</b><span data-i="st4.s">установщика и этой страницы</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="features">
+    <div class="wrap">
+      <div class="kick reveal" data-i="f.kick">Возможности</div>
+      <h2 class="title reveal" data-i="f.title">Зачем нужен RT Launcher</h2>
+      <p class="sub reveal" data-i="f.sub">RuTracker — огромная библиотека игр, но искать раздачи, качать торренты, распаковывать и запускать их вручную долго. Лаунчер делает всё это сам.</p>
+      <div class="grid">
+        <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div><h3 data-i="f1.h">Каталог и поиск</h3><p data-i="f1.p">Все игровые разделы RuTracker с обложками, жанрами, сидами и размером. Поиск по первым буквам, подсказки, сортировка.</p></div>
+        <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 15 5-5 4 4 3-3 6 6"/></svg></div><h3 data-i="f2.h">Страница игры как в Steam</h3><p data-i="f2.p">Скриншоты из Steam, описание, системные требования и проверка: потянет ли ваш компьютер и хватит ли места на диске.</p></div>
+        <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></div><h3 data-i="f3.h">Загрузка в один клик</h3><p data-i="f3.p">Лаунчер сам ставит и настраивает qBittorrent, добавляет раздачу и показывает скорость, прогресс и время до конца.</p></div>
+        <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg></div><h3 data-i="f4.h">Автоматическая установка</h3><p data-i="f4.p">Архивы (в том числе многотомные и ISO) распаковываются, установщики запускаются в нужную папку, файл запуска находится сам.</p></div>
+        <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="M6 12h4M8 10v4M15 13h.01M18 11h.01"/></svg></div><h3 data-i="f5.h">Библиотека и запуск</h3><p data-i="f5.p">Все игры в одном месте: кнопка «Играть», время в игре, последний запуск, избранное и свой порядок перетаскиванием.</p></div>
+        <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></div><h3 data-i="f6.h">Достижения</h3><p data-i="f6.p">Названия и иконки достижений из Steam, процент игроков и всплывающее уведомление поверх игры, когда вы его получили.</p></div>
+        <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></div><h3 data-i="f7.h">Обновления игр</h3><p data-i="f7.p">Вышла новая версия раздачи — лаунчер предложит обновить игру и сам скачает и установит её поверх.</p></div>
+        <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M17 3a4 4 0 0 1 0 8M22 21a7 7 0 0 0-4-6.3"/></svg></div><h3 data-i="f8.h">Игры по сети</h3><p data-i="f8.p">Отдельный раздел с играми для совместной игры: лаунчер ставит игру и нужные файлы для сетевой игры автоматически.</p></div>
+        <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg></div><h3 data-i="f9.h">Поделиться игрой</h3><p data-i="f9.p">Отправьте другу ссылку — у него игра откроется прямо в лаунчере. Темы оформления, горячие клавиши и быстрый поиск Ctrl+K.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="how">
+    <div class="wrap">
+      <div class="kick reveal" data-i="h.kick">Как начать</div>
+      <h2 class="title reveal" data-i="h.title">Три шага — и можно играть</h2>
+      <p class="sub reveal" data-i="h.sub">При первом запуске лаунчер сам проведёт по настройке.</p>
+      <div class="steps">
+        <div class="step reveal"><h3 data-i="s1.h">Установите лаунчер</h3><p data-i="s1.p">Скачайте установщик и запустите его. Права администратора не нужны, дальше лаунчер обновляется сам.</p></div>
+        <div class="step reveal"><h3 data-i="s2.h">Выберите папку и войдите</h3><p data-i="s2.p">Укажите диск для игр и войдите в свой аккаунт RuTracker — регистрация на сайте бесплатная.</p></div>
+        <div class="step reveal"><h3 data-i="s3.h">Подключите qBittorrent</h3><p data-i="s3.p">Одна кнопка: лаунчер сам установит и настроит qBittorrent. Выбирайте игру и нажимайте «Скачать».</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="screens">
+    <div class="wrap">
+      <div class="kick reveal" data-i="g.kick">Скриншоты</div>
+      <h2 class="title reveal" data-i="g.title">Как это выглядит</h2>
+      <div class="tabs reveal" id="tabs">
+        <button class="tab on" data-shot="catalog" data-i="g.t1">Каталог</button>
+        <button class="tab" data-shot="game" data-i="g.t2">Страница игры</button>
+        <button class="tab" data-shot="library" data-i="g.t3">Библиотека</button>
+        <button class="tab" data-shot="home" data-i="g.t4">Главная</button>
+      </div>
+      <div class="gallery reveal" id="gallery"><picture><source id="galSrc" srcset="assets/catalog.webp" type="image/webp"><img id="galImg" src="assets/catalog.jpg" alt="" loading="lazy"></picture></div>
+    </div>
+  </section>
+
+  <section class="sec" id="faq">
+    <div class="wrap two">
+      <div class="panel reveal">
+        <h3 data-i="r.title">Что нужно</h3>
+        <ul class="req">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><div><b data-i="r1.b">Windows 10 или 11, 64 бит</b><span data-i="r1.s">Окно работает через WebView2; если его нет — откроется в Chrome или Edge.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><div><b data-i="r2.b">Аккаунт RuTracker</b><span data-i="r2.s">Без входа RuTracker не даёт скачивать раздачи. Регистрация бесплатная.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><div><b data-i="r3.b">qBittorrent</b><span data-i="r3.s">Не установлен — лаунчер поставит и настроит его сам.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><div><b data-i="r4.b">Около 100 МБ</b><span data-i="r4.s">для самого лаунчера, плюс место под игры.</span></div></li>
+        </ul>
+      </div>
+      <div class="panel reveal">
+        <h3 data-i="q.title">Частые вопросы</h3>
+        <details><summary data-i="q1.q">Это бесплатно?</summary><p data-i="q1.a">Да, полностью. Лаунчер не продаёт игры и не показывает рекламу.</p></details>
+        <details><summary data-i="q2.q">Антивирус ругается на игру — это нормально?</summary><p data-i="q2.a">Защитник Windows иногда удаляет файлы из раздач. Лаунчер проверит установку и предупредит, если файлов не хватает.</p></details>
+        <details><summary data-i="q3.q">RuTracker не открывается — что делать?</summary><p data-i="q3.a">Лаунчер сам пробует обойти блокировку провайдера и поддерживает зеркала. Если не помогает — включите VPN.</p></details>
+        <details><summary data-i="q4.q">Как обновить лаунчер?</summary><p data-i="q4.a">Он проверяет обновления при запуске и ставит их сам, настройки и библиотека сохраняются.</p></details>
+        <details><summary data-i="q5.q">Как удалить?</summary><p data-i="q5.a">Через «Параметры → Приложения» Windows, как любую программу. Установленные игры остаются на диске.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="final reveal">
+      <img src="assets/apple-touch-icon.png" alt="">
+      <h2 data-i="end.title">Готовы попробовать?</h2>
+      <p data-i="end.sub">Установка занимает меньше минуты.</p>
+      <a class="btn primary big dl" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span data-i="dl.main">Скачать для Windows</span></a>
+    </div>
+  </div>
 </main>
+
+<footer>
+  <div class="wrap">
+    <span>© RT Launcher · <a href="https://github.com/Danik105/rtlauncher/releases" data-i="foot.rel">Все версии</a></span>
+    <span data-i="foot.note">RT Launcher не связан с RuTracker, Steam и Valve.</span>
+  </div>
+</footer>
+
+<div class="lb" id="lb"><img id="lbImg" alt=""></div>
+
 <script>
 (function () {
+  var SETUP = "https://github.com/Danik105/rtlauncher/releases/latest/download/RTLauncher-Setup.exe";
+  var LANGS = { ru: "Русский", en: "English", de: "Deutsch", es: "Español", fr: "Français" };
+
+  // ── Переводы (ru — в разметке) ──
+  var T = {
+    en: {
+      "nav.features":"Features","nav.how":"Get started","nav.screens":"Screenshots","nav.faq":"FAQ","dl.short":"Download",
+      "share.kick":"A game was shared with you","share.hint":"Your browser will ask to open RT Launcher — allow it. No launcher yet? Download it below.","share.open":"Open in RT Launcher","share.src":"Torrent page",
+      "hero.badge":"Free · Windows 10 and 11","hero.title":"Every RuTracker game — <em>in one launcher</em>",
+      "hero.lead":"A catalog with covers and screenshots, one-click downloads, automatic installation and a library to launch your games — like Steam, but for RuTracker.",
+      "dl.main":"Download for Windows","dl.zip":"Portable version (ZIP)","meta.ver":"Latest version","meta.admin":"No admin rights needed","meta.auto":"Updates itself",
+      "st1.b":"1 click","st1.s":"from game card to download","st2.b":"Auto","st2.s":"unpacking, installers, ISO","st3.b":"Steam","st3.s":"covers, screenshots, requirements","st4.b":"5 languages","st4.s":"installer and this page",
+      "f.kick":"Features","f.title":"Why RT Launcher","f.sub":"RuTracker is a huge game library, but finding torrents, downloading, unpacking and launching them by hand takes time. The launcher does it all for you.",
+      "f1.h":"Catalog and search","f1.p":"All RuTracker game sections with covers, genres, seeds and size. Instant search with suggestions and sorting.",
+      "f2.h":"Steam-like game page","f2.p":"Screenshots from Steam, description, system requirements and a check whether your PC can run it and has enough disk space.",
+      "f3.h":"One-click download","f3.p":"The launcher installs and configures qBittorrent, adds the torrent and shows speed, progress and time left.",
+      "f4.h":"Automatic installation","f4.p":"Archives (including multi-part and ISO) are unpacked, installers run into the right folder, the game executable is found automatically.",
+      "f5.h":"Library and launch","f5.p":"All your games in one place: a Play button, playtime, last played, favorites and drag-and-drop ordering.",
+      "f6.h":"Achievements","f6.p":"Achievement names and icons from Steam, player percentages and a pop-up over the game when you unlock one.",
+      "f7.h":"Game updates","f7.p":"A new version of the torrent is out — the launcher offers to update and downloads and installs it on top.",
+      "f8.h":"Online play","f8.p":"A separate section of multiplayer games: the launcher installs the game and the files needed for online play.",
+      "f9.h":"Share a game","f9.p":"Send a friend a link and the game opens right in their launcher. Themes, hotkeys and quick search with Ctrl+K.",
+      "h.kick":"Get started","h.title":"Three steps and you're playing","h.sub":"On first launch the launcher walks you through setup.",
+      "s1.h":"Install the launcher","s1.p":"Download the installer and run it. No admin rights needed; the launcher keeps itself up to date.",
+      "s2.h":"Pick a folder and sign in","s2.p":"Choose a drive for games and sign in to your RuTracker account — registration is free.",
+      "s3.h":"Connect qBittorrent","s3.p":"One button: the launcher installs and configures qBittorrent. Pick a game and hit Download.",
+      "g.kick":"Screenshots","g.title":"What it looks like","g.t1":"Catalog","g.t2":"Game page","g.t3":"Library","g.t4":"Home",
+      "r.title":"Requirements","r1.b":"Windows 10 or 11, 64-bit","r1.s":"The window uses WebView2; without it the launcher opens in Chrome or Edge.",
+      "r2.b":"A RuTracker account","r2.s":"RuTracker only allows downloads when signed in. Registration is free.",
+      "r3.b":"qBittorrent","r3.s":"Not installed? The launcher installs and configures it for you.","r4.b":"About 100 MB","r4.s":"for the launcher itself, plus space for games.",
+      "q.title":"FAQ","q1.q":"Is it free?","q1.a":"Yes, completely. The launcher sells nothing and shows no ads.",
+      "q2.q":"My antivirus complains about a game — is that normal?","q2.a":"Windows Defender sometimes removes files from torrents. The launcher checks the installation and warns you if files are missing.",
+      "q3.q":"RuTracker won't open — what now?","q3.a":"The launcher tries to bypass ISP blocking on its own and supports mirrors. If that doesn't help, turn on a VPN.",
+      "q4.q":"How do I update the launcher?","q4.a":"It checks for updates on start and installs them itself; settings and library are kept.",
+      "q5.q":"How do I uninstall it?","q5.a":"Via Windows Settings → Apps, like any program. Installed games stay on disk.",
+      "end.title":"Ready to try it?","end.sub":"Installation takes less than a minute.","foot.rel":"All versions","foot.note":"RT Launcher is not affiliated with RuTracker, Steam or Valve.",
+      "ver":"Version {v} · {mb} MB"
+    },
+    de: {
+      "nav.features":"Funktionen","nav.how":"Loslegen","nav.screens":"Screenshots","nav.faq":"Fragen","dl.short":"Download",
+      "share.kick":"Jemand hat ein Spiel mit dir geteilt","share.hint":"Der Browser fragt, ob RT Launcher geöffnet werden soll — erlaube es. Noch kein Launcher? Unten herunterladen.","share.open":"In RT Launcher öffnen","share.src":"Torrent-Seite",
+      "hero.badge":"Kostenlos · Windows 10 und 11","hero.title":"Alle RuTracker-Spiele — <em>in einem Launcher</em>",
+      "hero.lead":"Ein Katalog mit Covern und Screenshots, Download mit einem Klick, automatische Installation und eine Bibliothek zum Starten deiner Spiele — wie Steam, nur für RuTracker.",
+      "dl.main":"Für Windows herunterladen","dl.zip":"Portable Version (ZIP)","meta.ver":"Neueste Version","meta.admin":"Keine Adminrechte nötig","meta.auto":"Aktualisiert sich selbst",
+      "st1.b":"1 Klick","st1.s":"von der Spielkarte zum Download","st2.b":"Auto","st2.s":"Entpacken, Installer, ISO","st3.b":"Steam","st3.s":"Cover, Screenshots, Anforderungen","st4.b":"5 Sprachen","st4.s":"Installer und diese Seite",
+      "f.kick":"Funktionen","f.title":"Wozu RT Launcher","f.sub":"RuTracker ist eine riesige Spielebibliothek, aber Torrents suchen, herunterladen, entpacken und starten kostet Zeit. Der Launcher erledigt das für dich.",
+      "f1.h":"Katalog und Suche","f1.p":"Alle Spielebereiche von RuTracker mit Covern, Genres, Seeds und Größe. Sofortsuche mit Vorschlägen und Sortierung.",
+      "f2.h":"Spieleseite wie bei Steam","f2.p":"Screenshots von Steam, Beschreibung, Systemanforderungen und eine Prüfung, ob dein PC das Spiel schafft und genug Speicher hat.",
+      "f3.h":"Download mit einem Klick","f3.p":"Der Launcher installiert und konfiguriert qBittorrent, fügt den Torrent hinzu und zeigt Tempo, Fortschritt und Restzeit.",
+      "f4.h":"Automatische Installation","f4.p":"Archive (auch mehrteilige und ISO) werden entpackt, Installer laufen in den richtigen Ordner, die Startdatei wird automatisch gefunden.",
+      "f5.h":"Bibliothek und Start","f5.p":"Alle Spiele an einem Ort: Spielen-Taste, Spielzeit, zuletzt gespielt, Favoriten und eigene Reihenfolge per Drag & Drop.",
+      "f6.h":"Erfolge","f6.p":"Namen und Symbole der Erfolge von Steam, Spieleranteile und ein Pop-up über dem Spiel, wenn du einen freischaltest.",
+      "f7.h":"Spiel-Updates","f7.p":"Neue Version des Torrents? Der Launcher bietet das Update an, lädt es herunter und installiert es drüber.",
+      "f8.h":"Online spielen","f8.p":"Ein eigener Bereich mit Mehrspieler-Spielen: Der Launcher installiert das Spiel und die Dateien fürs Online-Spiel.",
+      "f9.h":"Spiel teilen","f9.p":"Schick einem Freund einen Link — das Spiel öffnet sich direkt in seinem Launcher. Designs, Tastenkürzel und Schnellsuche mit Strg+K.",
+      "h.kick":"Loslegen","h.title":"Drei Schritte bis zum Spielen","h.sub":"Beim ersten Start führt dich der Launcher durch die Einrichtung.",
+      "s1.h":"Launcher installieren","s1.p":"Installer herunterladen und starten. Keine Adminrechte nötig, danach aktualisiert sich der Launcher selbst.",
+      "s2.h":"Ordner wählen und anmelden","s2.p":"Laufwerk für Spiele wählen und beim RuTracker-Konto anmelden — die Registrierung ist kostenlos.",
+      "s3.h":"qBittorrent verbinden","s3.p":"Ein Klick: Der Launcher installiert und konfiguriert qBittorrent. Spiel wählen und auf Download drücken.",
+      "g.kick":"Screenshots","g.title":"So sieht es aus","g.t1":"Katalog","g.t2":"Spieleseite","g.t3":"Bibliothek","g.t4":"Start",
+      "r.title":"Voraussetzungen","r1.b":"Windows 10 oder 11, 64 Bit","r1.s":"Das Fenster nutzt WebView2; ohne es öffnet sich der Launcher in Chrome oder Edge.",
+      "r2.b":"Ein RuTracker-Konto","r2.s":"Ohne Anmeldung erlaubt RuTracker keine Downloads. Die Registrierung ist kostenlos.",
+      "r3.b":"qBittorrent","r3.s":"Nicht installiert? Der Launcher installiert und konfiguriert es selbst.","r4.b":"Etwa 100 MB","r4.s":"für den Launcher, plus Platz für Spiele.",
+      "q.title":"Häufige Fragen","q1.q":"Ist das kostenlos?","q1.a":"Ja, komplett. Der Launcher verkauft nichts und zeigt keine Werbung.",
+      "q2.q":"Der Virenschutz meckert über ein Spiel — normal?","q2.a":"Windows Defender löscht manchmal Dateien aus Torrents. Der Launcher prüft die Installation und warnt, wenn Dateien fehlen.",
+      "q3.q":"RuTracker öffnet sich nicht — was tun?","q3.a":"Der Launcher versucht Provider-Sperren selbst zu umgehen und unterstützt Spiegel. Hilft das nicht, schalte ein VPN ein.",
+      "q4.q":"Wie aktualisiere ich den Launcher?","q4.a":"Er sucht beim Start nach Updates und installiert sie selbst; Einstellungen und Bibliothek bleiben erhalten.",
+      "q5.q":"Wie deinstalliere ich ihn?","q5.a":"Über Windows-Einstellungen → Apps, wie jedes Programm. Installierte Spiele bleiben auf der Festplatte.",
+      "end.title":"Bereit zum Ausprobieren?","end.sub":"Die Installation dauert weniger als eine Minute.","foot.rel":"Alle Versionen","foot.note":"RT Launcher steht in keiner Verbindung zu RuTracker, Steam oder Valve.",
+      "ver":"Version {v} · {mb} MB"
+    },
+    es: {
+      "nav.features":"Funciones","nav.how":"Empezar","nav.screens":"Capturas","nav.faq":"Preguntas","dl.short":"Descargar",
+      "share.kick":"Te han compartido un juego","share.hint":"El navegador preguntará si abrir RT Launcher: permítelo. ¿No tienes el lanzador? Descárgalo abajo.","share.open":"Abrir en RT Launcher","share.src":"Página del torrent",
+      "hero.badge":"Gratis · Windows 10 y 11","hero.title":"Todos los juegos de RuTracker — <em>en un solo lanzador</em>",
+      "hero.lead":"Un catálogo con portadas y capturas, descargas en un clic, instalación automática y una biblioteca para lanzar tus juegos: como Steam, pero para RuTracker.",
+      "dl.main":"Descargar para Windows","dl.zip":"Versión portátil (ZIP)","meta.ver":"Última versión","meta.admin":"Sin permisos de administrador","meta.auto":"Se actualiza solo",
+      "st1.b":"1 clic","st1.s":"de la ficha del juego a la descarga","st2.b":"Auto","st2.s":"descompresión, instaladores, ISO","st3.b":"Steam","st3.s":"portadas, capturas, requisitos","st4.b":"5 idiomas","st4.s":"instalador y esta página",
+      "f.kick":"Funciones","f.title":"Para qué sirve RT Launcher","f.sub":"RuTracker es una enorme biblioteca de juegos, pero buscar torrents, descargarlos, descomprimirlos y lanzarlos a mano lleva tiempo. El lanzador lo hace por ti.",
+      "f1.h":"Catálogo y búsqueda","f1.p":"Todas las secciones de juegos de RuTracker con portadas, géneros, semillas y tamaño. Búsqueda instantánea con sugerencias y orden.",
+      "f2.h":"Página de juego como en Steam","f2.p":"Capturas de Steam, descripción, requisitos del sistema y comprobación de si tu PC lo mueve y si hay espacio en disco.",
+      "f3.h":"Descarga en un clic","f3.p":"El lanzador instala y configura qBittorrent, añade el torrent y muestra velocidad, progreso y tiempo restante.",
+      "f4.h":"Instalación automática","f4.p":"Los archivos (incluidos multiparte e ISO) se descomprimen, los instaladores se ejecutan en la carpeta correcta y el ejecutable se encuentra solo.",
+      "f5.h":"Biblioteca y ejecución","f5.p":"Todos tus juegos en un sitio: botón Jugar, tiempo de juego, última partida, favoritos y orden propio arrastrando.",
+      "f6.h":"Logros","f6.p":"Nombres e iconos de logros de Steam, porcentaje de jugadores y un aviso sobre el juego cuando desbloqueas uno.",
+      "f7.h":"Actualizaciones de juegos","f7.p":"¿Hay una versión nueva del torrent? El lanzador ofrece actualizar, la descarga y la instala encima.",
+      "f8.h":"Juego en línea","f8.p":"Una sección aparte de juegos multijugador: el lanzador instala el juego y los archivos necesarios para jugar en línea.",
+      "f9.h":"Compartir un juego","f9.p":"Envía un enlace a un amigo y el juego se abre directamente en su lanzador. Temas, atajos y búsqueda rápida con Ctrl+K.",
+      "h.kick":"Empezar","h.title":"Tres pasos y a jugar","h.sub":"En el primer inicio el lanzador te guía por la configuración.",
+      "s1.h":"Instala el lanzador","s1.p":"Descarga el instalador y ejecútalo. No requiere permisos de administrador y luego se actualiza solo.",
+      "s2.h":"Elige carpeta e inicia sesión","s2.p":"Elige un disco para los juegos e inicia sesión en tu cuenta de RuTracker; el registro es gratuito.",
+      "s3.h":"Conecta qBittorrent","s3.p":"Un botón: el lanzador instala y configura qBittorrent. Elige un juego y pulsa Descargar.",
+      "g.kick":"Capturas","g.title":"Así se ve","g.t1":"Catálogo","g.t2":"Página del juego","g.t3":"Biblioteca","g.t4":"Inicio",
+      "r.title":"Requisitos","r1.b":"Windows 10 u 11, 64 bits","r1.s":"La ventana usa WebView2; sin él, el lanzador se abre en Chrome o Edge.",
+      "r2.b":"Una cuenta de RuTracker","r2.s":"RuTracker solo permite descargar con sesión iniciada. El registro es gratuito.",
+      "r3.b":"qBittorrent","r3.s":"¿No está instalado? El lanzador lo instala y configura por ti.","r4.b":"Unos 100 MB","r4.s":"para el lanzador, más espacio para juegos.",
+      "q.title":"Preguntas frecuentes","q1.q":"¿Es gratis?","q1.a":"Sí, totalmente. El lanzador no vende nada ni muestra anuncios.",
+      "q2.q":"El antivirus se queja de un juego, ¿es normal?","q2.a":"Windows Defender a veces borra archivos de los torrents. El lanzador revisa la instalación y avisa si faltan archivos.",
+      "q3.q":"RuTracker no abre, ¿qué hago?","q3.a":"El lanzador intenta saltarse el bloqueo del proveedor por sí solo y admite espejos. Si no basta, activa una VPN.",
+      "q4.q":"¿Cómo actualizo el lanzador?","q4.a":"Busca actualizaciones al iniciarse y las instala solo; la configuración y la biblioteca se conservan.",
+      "q5.q":"¿Cómo lo desinstalo?","q5.a":"Desde Configuración de Windows → Aplicaciones, como cualquier programa. Los juegos instalados se quedan en el disco.",
+      "end.title":"¿Listo para probarlo?","end.sub":"La instalación tarda menos de un minuto.","foot.rel":"Todas las versiones","foot.note":"RT Launcher no está afiliado a RuTracker, Steam ni Valve.",
+      "ver":"Versión {v} · {mb} MB"
+    },
+    fr: {
+      "nav.features":"Fonctions","nav.how":"Démarrer","nav.screens":"Captures","nav.faq":"Questions","dl.short":"Télécharger",
+      "share.kick":"On vous a partagé un jeu","share.hint":"Le navigateur va demander d'ouvrir RT Launcher — acceptez. Pas encore de lanceur ? Téléchargez-le ci-dessous.","share.open":"Ouvrir dans RT Launcher","share.src":"Page du torrent",
+      "hero.badge":"Gratuit · Windows 10 et 11","hero.title":"Tous les jeux RuTracker — <em>dans un seul lanceur</em>",
+      "hero.lead":"Un catalogue avec jaquettes et captures, téléchargement en un clic, installation automatique et une bibliothèque pour lancer vos jeux — comme Steam, mais pour RuTracker.",
+      "dl.main":"Télécharger pour Windows","dl.zip":"Version portable (ZIP)","meta.ver":"Dernière version","meta.admin":"Sans droits administrateur","meta.auto":"Se met à jour tout seul",
+      "st1.b":"1 clic","st1.s":"de la fiche du jeu au téléchargement","st2.b":"Auto","st2.s":"décompression, installeurs, ISO","st3.b":"Steam","st3.s":"jaquettes, captures, configuration","st4.b":"5 langues","st4.s":"installeur et cette page",
+      "f.kick":"Fonctions","f.title":"À quoi sert RT Launcher","f.sub":"RuTracker est une immense bibliothèque de jeux, mais chercher les torrents, télécharger, décompresser et lancer à la main prend du temps. Le lanceur s'en charge.",
+      "f1.h":"Catalogue et recherche","f1.p":"Toutes les sections jeux de RuTracker avec jaquettes, genres, seeds et taille. Recherche instantanée avec suggestions et tri.",
+      "f2.h":"Page de jeu façon Steam","f2.p":"Captures Steam, description, configuration requise et vérification : votre PC le fera-t-il tourner, reste-t-il de la place ?",
+      "f3.h":"Téléchargement en un clic","f3.p":"Le lanceur installe et configure qBittorrent, ajoute le torrent et affiche vitesse, progression et temps restant.",
+      "f4.h":"Installation automatique","f4.p":"Les archives (y compris multi-volumes et ISO) sont décompressées, les installeurs lancés dans le bon dossier, l'exécutable trouvé automatiquement.",
+      "f5.h":"Bibliothèque et lancement","f5.p":"Tous vos jeux au même endroit : bouton Jouer, temps de jeu, dernière session, favoris et ordre personnalisé par glisser-déposer.",
+      "f6.h":"Succès","f6.p":"Noms et icônes des succès depuis Steam, pourcentage de joueurs et une notification par-dessus le jeu quand vous en débloquez un.",
+      "f7.h":"Mises à jour des jeux","f7.p":"Nouvelle version du torrent ? Le lanceur propose la mise à jour, la télécharge et l'installe par-dessus.",
+      "f8.h":"Jeu en ligne","f8.p":"Une section dédiée aux jeux multijoueurs : le lanceur installe le jeu et les fichiers nécessaires pour jouer en ligne.",
+      "f9.h":"Partager un jeu","f9.p":"Envoyez un lien à un ami : le jeu s'ouvre directement dans son lanceur. Thèmes, raccourcis et recherche rapide avec Ctrl+K.",
+      "h.kick":"Démarrer","h.title":"Trois étapes et c'est parti","h.sub":"Au premier lancement, le lanceur vous guide dans la configuration.",
+      "s1.h":"Installez le lanceur","s1.p":"Téléchargez l'installeur et lancez-le. Aucun droit administrateur requis, ensuite le lanceur se met à jour seul.",
+      "s2.h":"Choisissez un dossier et connectez-vous","s2.p":"Choisissez un disque pour les jeux et connectez-vous à votre compte RuTracker — l'inscription est gratuite.",
+      "s3.h":"Connectez qBittorrent","s3.p":"Un seul bouton : le lanceur installe et configure qBittorrent. Choisissez un jeu et cliquez sur Télécharger.",
+      "g.kick":"Captures","g.title":"À quoi ça ressemble","g.t1":"Catalogue","g.t2":"Page du jeu","g.t3":"Bibliothèque","g.t4":"Accueil",
+      "r.title":"Configuration","r1.b":"Windows 10 ou 11, 64 bits","r1.s":"La fenêtre utilise WebView2 ; sans lui, le lanceur s'ouvre dans Chrome ou Edge.",
+      "r2.b":"Un compte RuTracker","r2.s":"RuTracker n'autorise les téléchargements qu'une fois connecté. L'inscription est gratuite.",
+      "r3.b":"qBittorrent","r3.s":"Pas installé ? Le lanceur l'installe et le configure pour vous.","r4.b":"Environ 100 Mo","r4.s":"pour le lanceur, plus la place pour les jeux.",
+      "q.title":"Questions fréquentes","q1.q":"C'est gratuit ?","q1.a":"Oui, entièrement. Le lanceur ne vend rien et n'affiche pas de publicité.",
+      "q2.q":"L'antivirus signale un jeu — normal ?","q2.a":"Windows Defender supprime parfois des fichiers des torrents. Le lanceur vérifie l'installation et prévient s'il manque des fichiers.",
+      "q3.q":"RuTracker ne s'ouvre pas — que faire ?","q3.a":"Le lanceur essaie de contourner seul le blocage du fournisseur et prend en charge les miroirs. Sinon, activez un VPN.",
+      "q4.q":"Comment mettre à jour le lanceur ?","q4.a":"Il cherche les mises à jour au démarrage et les installe seul ; paramètres et bibliothèque sont conservés.",
+      "q5.q":"Comment le désinstaller ?","q5.a":"Via Paramètres Windows → Applications, comme n'importe quel programme. Les jeux installés restent sur le disque.",
+      "end.title":"Prêt à essayer ?","end.sub":"L'installation prend moins d'une minute.","foot.rel":"Toutes les versions","foot.note":"RT Launcher n'est pas affilié à RuTracker, Steam ou Valve.",
+      "ver":"Version {v} · {mb} Mo"
+    }
+  };
+
+  // Русский — исходный текст разметки
+  var RU = {};
+  document.querySelectorAll("[data-i]").forEach(function (el) { RU[el.getAttribute("data-i")] = el.hasAttribute("data-html") ? el.innerHTML : el.textContent; });
+  RU.ver = "Версия {v} · {mb} МБ";
+
+  var release = null;
+  function pick() {
+    var saved = null;
+    try { saved = localStorage.getItem("rtl_lang"); } catch (e) {}
+    if (saved && (saved === "ru" || T[saved])) return saved;
+    var nav = (navigator.languages || [navigator.language || "ru"]).map(function (l) { return String(l).slice(0, 2).toLowerCase(); });
+    for (var i = 0; i < nav.length; i++) {
+      if (nav[i] === "ru" || nav[i] === "uk" || nav[i] === "be" || nav[i] === "kk") return "ru";
+      if (T[nav[i]]) return nav[i];
+    }
+    return "en";
+  }
+  var lang = pick();
+
+  function tr(key) { return (lang === "ru" ? RU : T[lang])[key] || RU[key]; }
+  function apply() {
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i]").forEach(function (el) {
+      var v = tr(el.getAttribute("data-i"));
+      if (v == null) return;
+      if (el.hasAttribute("data-html")) el.innerHTML = v; else el.textContent = v;
+    });
+    document.getElementById("langCur").textContent = lang.toUpperCase();
+    document.querySelectorAll("#langList button").forEach(function (b) { b.classList.toggle("on", b.dataset.l === lang); });
+    showVersion();
+  }
+  function showVersion() {
+    if (!release) return;
+    document.getElementById("ver").textContent = tr("ver").replace("{v}", release.v).replace("{mb}", release.mb);
+  }
+
+  // Язык
+  var list = document.getElementById("langList");
+  Object.keys(LANGS).forEach(function (k) {
+    var li = document.createElement("li"), b = document.createElement("button");
+    b.type = "button"; b.dataset.l = k; b.textContent = LANGS[k];
+    b.onclick = function () { lang = k; try { localStorage.setItem("rtl_lang", k); } catch (e) {} document.getElementById("lang").classList.remove("open"); apply(); };
+    li.appendChild(b); list.appendChild(li);
+  });
+  document.getElementById("langBtn").onclick = function (e) { e.stopPropagation(); document.getElementById("lang").classList.toggle("open"); };
+  document.addEventListener("click", function () { document.getElementById("lang").classList.remove("open"); });
+
+  // Скачать — установщик последней версии
+  document.querySelectorAll(".dl").forEach(function (a) { a.href = SETUP; });
+
+  // Версия и размер с GitHub
+  fetch("https://api.github.com/repos/Danik105/rtlauncher/releases/latest").then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+    if (!j || !j.tag_name) return;
+    var setup = (j.assets || []).filter(function (a) { return a.name === "RTLauncher-Setup.exe"; })[0];
+    var zip = (j.assets || []).filter(function (a) { return a.name === "RTLauncher.zip"; })[0];
+    var size = (setup || zip || {}).size || 0;
+    release = { v: j.tag_name.replace(/^v/, ""), mb: Math.round(size / 1048576) };
+    // Старые выпуски без установщика — тогда кнопка ведёт на ZIP
+    if (!setup && zip) document.querySelectorAll(".dl").forEach(function (a) { a.href = zip.browser_download_url; });
+    showVersion();
+  }).catch(function () {});
+
+  // Галерея
+  var tabs = document.querySelectorAll("#tabs .tab");
+  tabs.forEach(function (t) {
+    t.onclick = function () {
+      tabs.forEach(function (x) { x.classList.toggle("on", x === t); });
+      document.getElementById("galSrc").srcset = "assets/" + t.dataset.shot + ".webp";
+      document.getElementById("galImg").src = "assets/" + t.dataset.shot + ".jpg";
+    };
+  });
+  var lb = document.getElementById("lb");
+  document.getElementById("gallery").onclick = function () {
+    document.getElementById("lbImg").src = document.getElementById("galImg").currentSrc || document.getElementById("galImg").src;
+    lb.classList.add("on");
+  };
+  lb.onclick = function () { lb.classList.remove("on"); };
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") lb.classList.remove("on"); });
+
+  // Появление блоков при прокрутке
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, { rootMargin: "0px 0px -40px 0px" });
+    document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+  } else document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("in"); });
+
+  // Ссылка «Поделиться»: ?t=<тема RuTracker> или ?ofx=<путь online-fix>, n — название
   var q = new URLSearchParams(location.search);
   var t = (q.get("t") || "").replace(/\D/g, "");
   var ofx = q.get("ofx") || "";
   var name = (q.get("n") || "").slice(0, 200);
-  if (name) {
-    document.getElementById("title").textContent = name;
-    document.title = name + " — RT Launcher";
+  if (t || /^[\w\-\/.]+\.html$/.test(ofx)) {
+    var params = (t ? "t=" + t : "ofx=" + encodeURIComponent(ofx)) + (name ? "&n=" + encodeURIComponent(name) : "");
+    var app = "rtlauncher://game?" + params;
+    document.getElementById("shared").hidden = false;
+    document.getElementById("sharedTitle").textContent = name || (t ? "RuTracker #" + t : ofx);
+    document.getElementById("sharedOpen").href = app;
+    document.getElementById("sharedSrc").href = t ? "https://rutracker.org/forum/viewtopic.php?t=" + t : "https://online-fix.me/" + ofx;
+    if (name) document.title = name + " — RT Launcher";
+    setTimeout(function () { location.href = app; }, 400);
   }
-  var src = document.getElementById("source");
-  var open = document.getElementById("open");
-  if (!t && !/^[\w\-\/.]+\.html$/.test(ofx)) {
-    document.getElementById("title").textContent = "Ссылка повреждена";
-    document.getElementById("hint").textContent = "В ней нет игры. Попросите отправить ссылку ещё раз.";
-    open.style.display = src.style.display = "none";
-    return;
-  }
-  var params = (t ? "t=" + t : "ofx=" + encodeURIComponent(ofx)) + (name ? "&n=" + encodeURIComponent(name) : "");
-  var app = "rtlauncher://game?" + params;
-  open.href = app;
-  src.href = t ? "https://rutracker.org/forum/viewtopic.php?t=" + t : "https://online-fix.me/" + ofx;
-  setTimeout(function () { location.href = app; }, 300);
+
+  apply();
 })();
 </script>
 </body>
