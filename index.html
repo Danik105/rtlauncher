@@ -140,6 +140,17 @@ details[open] summary::after{content:"–"}
 details p{margin:8px 0 0;color:var(--muted);font-size:14.5px}
 @media (max-width:860px){.two{grid-template-columns:1fr}}
 
+.help{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:center;padding:34px;border-radius:24px;background:linear-gradient(135deg,rgba(62,207,142,.10),rgba(232,93,4,.06) 60%),var(--card);border:1px solid var(--line2)}
+.help h2{font-size:clamp(24px,3vw,34px);letter-spacing:-.03em;line-height:1.15;margin:8px 0 10px}
+.help p{color:var(--muted);margin:0 0 20px}
+.help ol{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:h}
+.help li{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;color:var(--muted)}
+.help li::before{counter-increment:h;content:counter(h);flex-shrink:0;width:26px;height:26px;border-radius:50%;background:rgba(62,207,142,.16);color:var(--ok);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.help li b{color:var(--text);font-weight:600}
+.logbox{margin-top:16px;padding:14px 16px;border-radius:14px;background:var(--bg2);border:1px solid var(--line);font-size:13.5px;color:var(--muted)}
+.logbox code{font:500 12.5px ui-monospace,Consolas,monospace;color:var(--text);background:var(--card2);padding:2px 6px;border-radius:6px;word-break:break-all}
+.help .btn.ok{background:linear-gradient(180deg,#46dd9a,#2bb67a);border-color:transparent;color:#05140d;box-shadow:0 12px 30px -10px rgba(62,207,142,.6)}
+@media (max-width:860px){.help{grid-template-columns:1fr;padding:24px}}
 .final{margin:90px 0 0;padding:56px 28px;border-radius:24px;text-align:center;background:radial-gradient(120% 140% at 50% 0%,rgba(232,93,4,.35),transparent 60%),var(--card);border:1px solid var(--line2)}
 .final img{width:72px;height:72px;margin:0 auto 18px;border-radius:20px;box-shadow:0 20px 40px -10px rgba(232,93,4,.6)}
 .final h2{font-size:clamp(26px,3.4vw,38px);letter-spacing:-.03em;margin:0 0 10px}
@@ -292,6 +303,27 @@ footer a{color:var(--muted)}
     </div>
   </section>
 
+  <section class="sec" id="help" hidden>
+    <div class="wrap">
+      <div class="help reveal">
+        <div>
+          <div class="kick" style="color:var(--ok)" data-i="help.kick">Помочь проекту</div>
+          <h2 data-i="help.title">Хочешь помочь проекту?</h2>
+          <p data-i="help.sub">Нашёл ошибку — расскажи о ней. Это займёт пару минут, а исправление получат все.</p>
+          <a class="btn ok" id="bugBtn" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l1.9 1.9M16 2l-1.9 1.9M9 7.1V6a3 3 0 0 1 6 0v1.1M12 20v-9M6.5 13H3M21 13h-3.5M5 19l2.5-2M19 19l-2.5-2M6 9l2 2M18 9l-2 2"/><rect x="7" y="7" width="10" height="13" rx="5"/></svg><span data-i="help.btn">Сообщить об ошибке</span></a>
+        </div>
+        <div>
+          <ol>
+            <li><span data-i="help.s1" data-html><b>Выбери, что сломалось</b> — интерфейс, загрузка, установка, запуск игры, достижения…</span></li>
+            <li><span data-i="help.s2" data-html><b>Опиши проблему</b> — что делал, что ожидал и что произошло. Почта подставится сама при входе через Google.</span></li>
+            <li><span data-i="help.s3" data-html><b>Прикрепи лог</b> (по желанию) — файл <code>launcher.log</code> очень помогает найти причину.</span></li>
+          </ol>
+          <div class="logbox" data-i="help.log" data-html>Где лежит <code>launcher.log</code>: установленная версия — нажми Win+R и вставь <code>%LOCALAPPDATA%\Programs\RTLauncher</code>; портативная — папка с <code>RTLauncher.exe</code>. Или в лаунчере: Настройки → «Сообщить об ошибке» → «Показать файл лога».</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <div class="wrap">
     <div class="final reveal">
       <img src="assets/apple-touch-icon.png" alt="">
@@ -314,11 +346,20 @@ footer a{color:var(--muted)}
 <script>
 (function () {
   var SETUP = "https://github.com/Danik105/rtlauncher/releases/latest/download/RTLauncher-Setup.exe";
+  // Google Форма «Сообщить об ошибке» (tools/bug_form) — ссылка в config.json рядом со страницей
+  // (её читает и лаунчер); пусто — блок «Хочешь помочь проекту?» скрыт
+  fetch("config.json", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : {}; }).then(function (c) {
+    if (!c || !/^https:\/\//.test(c.bugForm || "")) return;
+    document.getElementById("help").hidden = false;
+    document.getElementById("bugBtn").href = c.bugForm;
+    var el = document.querySelector("#help .reveal"); if (el) el.classList.add("in");
+  }).catch(function () {});
   var LANGS = { ru: "Русский", en: "English", de: "Deutsch", es: "Español", fr: "Français" };
 
   // ── Переводы (ru — в разметке) ──
   var T = {
     en: {
+      "help.kick":"Help the project","help.title":"Want to help the project?","help.sub":"Found a bug? Tell us about it. It takes a couple of minutes, and the fix reaches everyone.","help.btn":"Report a bug","help.s1":"<b>Pick what broke</b> — interface, download, installation, launching a game, achievements…","help.s2":"<b>Describe the problem</b> — what you did, what you expected and what happened. Your email is filled in when you sign in with Google.","help.s3":"<b>Attach the log</b> (optional) — the <code>launcher.log</code> file helps a lot to find the cause.","help.log":"Where is <code>launcher.log</code>: installed version — press Win+R and paste <code>%LOCALAPPDATA%\\Programs\\RTLauncher</code>; portable — the folder with <code>RTLauncher.exe</code>. Or in the launcher: Settings → Report a bug → Show log file.",
       "nav.features":"Features","nav.how":"Get started","nav.screens":"Screenshots","nav.faq":"FAQ","dl.short":"Download",
       "share.kick":"A game was shared with you","share.hint":"Your browser will ask to open RT Launcher — allow it. No launcher yet? Download it below.","share.open":"Open in RT Launcher","share.src":"Torrent page",
       "hero.badge":"Free · Windows 10 and 11","hero.title":"Every RuTracker game — <em>in one launcher</em>",
@@ -352,6 +393,7 @@ footer a{color:var(--muted)}
       "ver":"Version {v} · {mb} MB"
     },
     de: {
+      "help.kick":"Projekt unterstützen","help.title":"Möchtest du dem Projekt helfen?","help.sub":"Einen Fehler gefunden? Erzähl uns davon. Das dauert ein paar Minuten, und die Lösung bekommen alle.","help.btn":"Fehler melden","help.s1":"<b>Wähle, was kaputt ist</b> — Oberfläche, Download, Installation, Spielstart, Erfolge…","help.s2":"<b>Beschreibe das Problem</b> — was du getan hast, was du erwartet hast und was passiert ist. Die E-Mail wird bei der Google-Anmeldung eingetragen.","help.s3":"<b>Log anhängen</b> (optional) — die Datei <code>launcher.log</code> hilft sehr, die Ursache zu finden.","help.log":"Wo liegt <code>launcher.log</code>: installierte Version — Win+R drücken und <code>%LOCALAPPDATA%\\Programs\\RTLauncher</code> einfügen; portable Version — der Ordner mit <code>RTLauncher.exe</code>.",
       "nav.features":"Funktionen","nav.how":"Loslegen","nav.screens":"Screenshots","nav.faq":"Fragen","dl.short":"Download",
       "share.kick":"Jemand hat ein Spiel mit dir geteilt","share.hint":"Der Browser fragt, ob RT Launcher geöffnet werden soll — erlaube es. Noch kein Launcher? Unten herunterladen.","share.open":"In RT Launcher öffnen","share.src":"Torrent-Seite",
       "hero.badge":"Kostenlos · Windows 10 und 11","hero.title":"Alle RuTracker-Spiele — <em>in einem Launcher</em>",
@@ -385,6 +427,7 @@ footer a{color:var(--muted)}
       "ver":"Version {v} · {mb} MB"
     },
     es: {
+      "help.kick":"Ayuda al proyecto","help.title":"¿Quieres ayudar al proyecto?","help.sub":"¿Encontraste un error? Cuéntanoslo. Tarda un par de minutos y la corrección llega a todos.","help.btn":"Informar de un error","help.s1":"<b>Elige qué falló</b>: interfaz, descarga, instalación, ejecución de un juego, logros…","help.s2":"<b>Describe el problema</b>: qué hiciste, qué esperabas y qué pasó. Tu correo se rellena al iniciar sesión con Google.","help.s3":"<b>Adjunta el registro</b> (opcional): el archivo <code>launcher.log</code> ayuda mucho a encontrar la causa.","help.log":"Dónde está <code>launcher.log</code>: versión instalada — pulsa Win+R y pega <code>%LOCALAPPDATA%\\Programs\\RTLauncher</code>; versión portátil — la carpeta con <code>RTLauncher.exe</code>.",
       "nav.features":"Funciones","nav.how":"Empezar","nav.screens":"Capturas","nav.faq":"Preguntas","dl.short":"Descargar",
       "share.kick":"Te han compartido un juego","share.hint":"El navegador preguntará si abrir RT Launcher: permítelo. ¿No tienes el lanzador? Descárgalo abajo.","share.open":"Abrir en RT Launcher","share.src":"Página del torrent",
       "hero.badge":"Gratis · Windows 10 y 11","hero.title":"Todos los juegos de RuTracker — <em>en un solo lanzador</em>",
@@ -418,6 +461,7 @@ footer a{color:var(--muted)}
       "ver":"Versión {v} · {mb} MB"
     },
     fr: {
+      "help.kick":"Aider le projet","help.title":"Envie d'aider le projet ?","help.sub":"Vous avez trouvé un bug ? Dites-le-nous. Ça prend deux minutes et la correction profite à tous.","help.btn":"Signaler un bug","help.s1":"<b>Choisissez ce qui ne va pas</b> — interface, téléchargement, installation, lancement d'un jeu, succès…","help.s2":"<b>Décrivez le problème</b> — ce que vous avez fait, ce que vous attendiez et ce qui s'est passé. L'e-mail est rempli via la connexion Google.","help.s3":"<b>Joignez le journal</b> (facultatif) — le fichier <code>launcher.log</code> aide beaucoup à trouver la cause.","help.log":"Où se trouve <code>launcher.log</code> : version installée — Win+R puis collez <code>%LOCALAPPDATA%\\Programs\\RTLauncher</code> ; version portable — le dossier contenant <code>RTLauncher.exe</code>.",
       "nav.features":"Fonctions","nav.how":"Démarrer","nav.screens":"Captures","nav.faq":"Questions","dl.short":"Télécharger",
       "share.kick":"On vous a partagé un jeu","share.hint":"Le navigateur va demander d'ouvrir RT Launcher — acceptez. Pas encore de lanceur ? Téléchargez-le ci-dessous.","share.open":"Ouvrir dans RT Launcher","share.src":"Page du torrent",
       "hero.badge":"Gratuit · Windows 10 et 11","hero.title":"Tous les jeux RuTracker — <em>dans un seul lanceur</em>",
