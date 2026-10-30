@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RT Launcher — игры с RuTracker в одном окне</title>
-<meta name="description" content="Лаунчер игр в духе Steam: каталог RuTracker с обложками и скриншотами, скачивание в один клик через qBittorrent, автоматическая установка, библиотека, достижения.">
+<title>RT Launcher — менеджер торрентов и библиотека игр</title>
+<meta name="description" content="Лаунчер игр в духе Steam: поиск торрентов с обложками и скриншотами, загрузка через qBittorrent, автоматическая установка, библиотека с запуском, достижения и обновления игр.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="RT Launcher">
-<meta property="og:description" content="Каталог RuTracker, загрузка и библиотека игр в одном окне. Бесплатно, для Windows 10 и 11.">
+<meta property="og:description" content="Торренты, загрузки и библиотека игр в одном окне. Бесплатно, для Windows 10 и 11.">
 <meta property="og:image" content="https://danik105.github.io/rtlauncher/assets/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0b0c10">
@@ -211,7 +211,7 @@ footer a{color:var(--muted)}
     </div>
     <div class="acts">
       <a class="btn primary sm" id="sharedOpen" href="#" data-i="share.open">Открыть в RT Launcher</a>
-      <a class="btn sm" id="sharedSrc" href="#" target="_blank" rel="noopener" data-i="share.src">Страница раздачи</a>
+      <a class="btn sm" id="sharedSrc" href="#" target="_blank" rel="noopener" data-i="share.src">Страница торрента</a>
     </div>
   </div>
 </div>
@@ -221,8 +221,8 @@ footer a{color:var(--muted)}
     <div class="wrap hgrid">
       <div>
         <span class="badge"><i></i><span data-i="hero.badge">Бесплатно · Windows 10 и 11</span></span>
-        <h1 data-i="hero.title" data-html>Все игры RuTracker — <em>в одном лаунчере</em></h1>
-        <p class="lead" data-i="hero.lead">Каталог раздач с обложками и скриншотами, загрузка в один клик, автоматическая установка и библиотека с запуском игр — как в Steam, только для RuTracker.</p>
+        <h1 data-i="hero.title" data-html>Торренты и игры — <em>в одном лаунчере</em></h1>
+        <p class="lead" data-i="hero.lead">Поиск торрентов с обложками и скриншотами, загрузка через qBittorrent, автоматическая установка и библиотека с запуском игр — всё в одном окне, как в Steam.</p>
         <div class="cta">
           <a class="btn primary big dl" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span data-i="dl.main">Скачать для Windows</span></a>
           <a class="btn" id="zip" href="https://github.com/Danik105/rtlauncher/releases/latest/download/RTLauncher.zip" data-i="dl.zip">Портативная версия (ZIP)</a>
@@ -252,15 +252,15 @@ footer a{color:var(--muted)}
     <div class="wrap">
       <div class="kick reveal" data-i="f.kick">Возможности</div>
       <h2 class="title reveal" data-i="f.title">Зачем нужен RT Launcher</h2>
-      <p class="sub reveal" data-i="f.sub">RuTracker — огромная библиотека игр, но искать раздачи, качать торренты, распаковывать и запускать их вручную долго. Лаунчер делает всё это сам.</p>
+      <p class="sub reveal" data-i="f.sub">Искать торренты, следить за загрузкой, распаковывать, устанавливать и запускать игры вручную — долго. Лаунчер делает всё это сам.</p>
       <div class="grid">
-        <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div><h3 data-i="f1.h">Каталог и поиск</h3><p data-i="f1.p">Все игровые разделы RuTracker с обложками, жанрами, сидами и размером. Поиск по первым буквам, подсказки, сортировка.</p></div>
+        <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div><h3 data-i="f1.h">Каталог и поиск</h3><p data-i="f1.p">Торренты с обложками, жанрами, сидами и размером. Поиск по первым буквам, подсказки, сортировка.</p></div>
         <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 15 5-5 4 4 3-3 6 6"/></svg></div><h3 data-i="f2.h">Страница игры как в Steam</h3><p data-i="f2.p">Скриншоты из Steam, описание, системные требования и проверка: потянет ли ваш компьютер и хватит ли места на диске.</p></div>
-        <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></div><h3 data-i="f3.h">Загрузка в один клик</h3><p data-i="f3.p">Лаунчер сам ставит и настраивает qBittorrent, добавляет раздачу и показывает скорость, прогресс и время до конца.</p></div>
+        <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></div><h3 data-i="f3.h">Загрузка в один клик</h3><p data-i="f3.p">Лаунчер сам ставит и настраивает qBittorrent, добавляет торрент и показывает скорость, прогресс и время до конца.</p></div>
         <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg></div><h3 data-i="f4.h">Автоматическая установка</h3><p data-i="f4.p">Архивы (в том числе многотомные и ISO) распаковываются, установщики запускаются в нужную папку, файл запуска находится сам.</p></div>
         <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="M6 12h4M8 10v4M15 13h.01M18 11h.01"/></svg></div><h3 data-i="f5.h">Библиотека и запуск</h3><p data-i="f5.p">Все игры в одном месте: кнопка «Играть», время в игре, последний запуск, избранное и свой порядок перетаскиванием.</p></div>
         <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></div><h3 data-i="f6.h">Достижения</h3><p data-i="f6.p">Названия и иконки достижений из Steam, процент игроков и всплывающее уведомление поверх игры, когда вы его получили.</p></div>
-        <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></div><h3 data-i="f7.h">Обновления игр</h3><p data-i="f7.p">Вышла новая версия раздачи — лаунчер предложит обновить игру и сам скачает и установит её поверх.</p></div>
+        <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></div><h3 data-i="f7.h">Обновления игр</h3><p data-i="f7.p">Вышла новая версия торрента — лаунчер сам докачает только изменённые файлы. А проверка целостности заново скачает недостающие.</p></div>
         <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M17 3a4 4 0 0 1 0 8M22 21a7 7 0 0 0-4-6.3"/></svg></div><h3 data-i="f8.h">Игры по сети</h3><p data-i="f8.p">Отдельный раздел с играми для совместной игры: лаунчер ставит игру и нужные файлы для сетевой игры автоматически.</p></div>
         <div class="feat reveal"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg></div><h3 data-i="f9.h">Поделиться игрой</h3><p data-i="f9.p">Отправьте другу ссылку — у него игра откроется прямо в лаунчере. Темы оформления, горячие клавиши и быстрый поиск Ctrl+K.</p></div>
       </div>
@@ -274,7 +274,7 @@ footer a{color:var(--muted)}
       <p class="sub reveal" data-i="h.sub">При первом запуске лаунчер сам проведёт по настройке.</p>
       <div class="steps">
         <div class="step reveal"><h3 data-i="s1.h">Установите лаунчер</h3><p data-i="s1.p">Скачайте установщик и запустите его. Права администратора не нужны, дальше лаунчер обновляется сам.</p></div>
-        <div class="step reveal"><h3 data-i="s2.h">Выберите папку и войдите</h3><p data-i="s2.p">Укажите диск для игр и войдите в свой аккаунт RuTracker — регистрация на сайте бесплатная.</p></div>
+        <div class="step reveal"><h3 data-i="s2.h">Выберите папку и войдите</h3><p data-i="s2.p">Укажите диск для игр и войдите в аккаунт торрент-трекера — мастер настройки подскажет, что делать.</p></div>
         <div class="step reveal"><h3 data-i="s3.h">Подключите qBittorrent</h3><p data-i="s3.p">Одна кнопка: лаунчер сам установит и настроит qBittorrent. Выбирайте игру и нажимайте «Скачать».</p></div>
       </div>
     </div>
@@ -300,7 +300,7 @@ footer a{color:var(--muted)}
         <h3 data-i="r.title">Что нужно</h3>
         <ul class="req">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><div><b data-i="r1.b">Windows 10 или 11, 64 бит</b><span data-i="r1.s">Окно работает через WebView2; если его нет — откроется в Chrome или Edge.</span></div></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><div><b data-i="r2.b">Аккаунт RuTracker</b><span data-i="r2.s">Без входа RuTracker не даёт скачивать раздачи. Регистрация бесплатная.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><div><b data-i="r2.b">Аккаунт торрент-трекера</b><span data-i="r2.s">Поиск и загрузка работают после входа в аккаунт трекера. Регистрация бесплатная.</span></div></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><div><b data-i="r3.b">qBittorrent</b><span data-i="r3.s">Не установлен — лаунчер поставит и настроит его сам.</span></div></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><div><b data-i="r4.b">Около 100 МБ</b><span data-i="r4.s">для самого лаунчера, плюс место под игры.</span></div></li>
         </ul>
@@ -308,8 +308,8 @@ footer a{color:var(--muted)}
       <div class="panel reveal">
         <h3 data-i="q.title">Частые вопросы</h3>
         <details><summary data-i="q1.q">Это бесплатно?</summary><p data-i="q1.a">Да, полностью. Лаунчер не продаёт игры и не показывает рекламу.</p></details>
-        <details><summary data-i="q2.q">Антивирус ругается на игру — это нормально?</summary><p data-i="q2.a">Защитник Windows иногда удаляет файлы из раздач. Лаунчер проверит установку и предупредит, если файлов не хватает.</p></details>
-        <details><summary data-i="q3.q">RuTracker не открывается — что делать?</summary><p data-i="q3.a">Лаунчер сам пробует обойти блокировку провайдера и поддерживает зеркала. Если не помогает — включите VPN.</p></details>
+        <details><summary data-i="q2.q">Антивирус ругается на игру — это нормально?</summary><p data-i="q2.a">Защитник Windows иногда удаляет файлы из скачанных игр. Лаунчер проверит установку и предупредит, если файлов не хватает.</p></details>
+        <details><summary data-i="q3.q">Поиск не загружается — что делать?</summary><p data-i="q3.a">Проверьте подключение к интернету и вход в аккаунт в настройках. Не помогло — сообщите об ошибке и приложите launcher.log.</p></details>
         <details><summary data-i="q4.q">Как обновить лаунчер?</summary><p data-i="q4.a">Он проверяет обновления при запуске и ставит их сам, настройки и библиотека сохраняются.</p></details>
         <details><summary data-i="q5.q">Как удалить?</summary><p data-i="q5.a">Через «Параметры → Приложения» Windows, как любую программу. Установленные игры остаются на диске.</p></details>
       </div>
@@ -394,31 +394,31 @@ footer a{color:var(--muted)}
       "help.kick":"Help the project","help.title":"Want to help the project?","help.sub":"Found a bug? Tell us about it. It takes a couple of minutes, and the fix reaches everyone.","help.btn":"Report a bug","help.s1":"<b>Pick what broke</b> — interface, download, installation, launching a game, achievements…","help.s2":"<b>Describe the problem</b> — what you did, what you expected and what happened. Your email is filled in when you sign in with Google.","help.s3":"<b>Attach the log</b> (optional) — the <code>launcher.log</code> file helps a lot to find the cause.","help.log":"Where is <code>launcher.log</code>: installed version — press Win+R and paste <code>%LOCALAPPDATA%\\Programs\\RTLauncher</code>; portable — the folder with <code>RTLauncher.exe</code>. Or in the launcher: Settings → Report a bug → Show log file.",
       "nav.features":"Features","nav.how":"Get started","nav.screens":"Screenshots","nav.faq":"FAQ","dl.short":"Download",
       "share.kick":"A game was shared with you","share.hint":"Your browser will ask to open RT Launcher — allow it. No launcher yet? Download it below.","share.open":"Open in RT Launcher","share.src":"Torrent page",
-      "hero.badge":"Free · Windows 10 and 11","hero.title":"Every RuTracker game — <em>in one launcher</em>",
-      "hero.lead":"A catalog with covers and screenshots, one-click downloads, automatic installation and a library to launch your games — like Steam, but for RuTracker.",
+      "hero.badge":"Free · Windows 10 and 11","hero.title":"Torrents and games — <em>in one launcher</em>",
+      "hero.lead":"Torrent search with covers and screenshots, downloads via qBittorrent, automatic installation and a library to launch your games — all in one window, like Steam.",
       "dl.main":"Download for Windows","dl.zip":"Portable version (ZIP)","meta.ver":"Latest version","meta.admin":"No admin rights needed","meta.auto":"Updates itself",
       "st1.b":"1 click","st1.s":"from game card to download","st2.b":"Auto","st2.s":"unpacking, installers, ISO","st3.b":"Steam","st3.s":"covers, screenshots, requirements","st4.b":"5 languages","st4.s":"installer and this page",
-      "f.kick":"Features","f.title":"Why RT Launcher","f.sub":"RuTracker is a huge game library, but finding torrents, downloading, unpacking and launching them by hand takes time. The launcher does it all for you.",
-      "f1.h":"Catalog and search","f1.p":"All RuTracker game sections with covers, genres, seeds and size. Instant search with suggestions and sorting.",
+      "f.kick":"Features","f.title":"Why RT Launcher","f.sub":"Searching for torrents, watching downloads, unpacking, installing and launching games by hand takes time. The launcher does all of it for you.",
+      "f1.h":"Catalog and search","f1.p":"Torrents with covers, genres, seeds and size. Instant search with suggestions and sorting.",
       "f2.h":"Steam-like game page","f2.p":"Screenshots from Steam, description, system requirements and a check whether your PC can run it and has enough disk space.",
       "f3.h":"One-click download","f3.p":"The launcher installs and configures qBittorrent, adds the torrent and shows speed, progress and time left.",
       "f4.h":"Automatic installation","f4.p":"Archives (including multi-part and ISO) are unpacked, installers run into the right folder, the game executable is found automatically.",
       "f5.h":"Library and launch","f5.p":"All your games in one place: a Play button, playtime, last played, favorites and drag-and-drop ordering.",
       "f6.h":"Achievements","f6.p":"Achievement names and icons from Steam, player percentages and a pop-up over the game when you unlock one.",
-      "f7.h":"Game updates","f7.p":"A new version of the torrent is out — the launcher offers to update and downloads and installs it on top.",
+      "f7.h":"Game updates","f7.p":"A new version of the torrent is out — the launcher downloads only the changed files on its own. An integrity check re-downloads anything missing.",
       "f8.h":"Online play","f8.p":"A separate section of multiplayer games: the launcher installs the game and the files needed for online play.",
       "f9.h":"Share a game","f9.p":"Send a friend a link and the game opens right in their launcher. Themes, hotkeys and quick search with Ctrl+K.",
       "h.kick":"Get started","h.title":"Three steps and you're playing","h.sub":"On first launch the launcher walks you through setup.",
       "s1.h":"Install the launcher","s1.p":"Download the installer and run it. No admin rights needed; the launcher keeps itself up to date.",
-      "s2.h":"Pick a folder and sign in","s2.p":"Choose a drive for games and sign in to your RuTracker account — registration is free.",
+      "s2.h":"Pick a folder and sign in","s2.p":"Choose a drive for games and sign in to your torrent tracker account — the setup wizard walks you through it.",
       "s3.h":"Connect qBittorrent","s3.p":"One button: the launcher installs and configures qBittorrent. Pick a game and hit Download.",
       "g.kick":"Screenshots","g.title":"What it looks like","g.t1":"Catalog","g.t2":"Game page","g.t3":"Library","g.t4":"Home",
       "r.title":"Requirements","r1.b":"Windows 10 or 11, 64-bit","r1.s":"The window uses WebView2; without it the launcher opens in Chrome or Edge.",
-      "r2.b":"A RuTracker account","r2.s":"RuTracker only allows downloads when signed in. Registration is free.",
+      "r2.b":"A torrent tracker account","r2.s":"Search and downloads work once you sign in to the tracker. Registration is free.",
       "r3.b":"qBittorrent","r3.s":"Not installed? The launcher installs and configures it for you.","r4.b":"About 100 MB","r4.s":"for the launcher itself, plus space for games.",
       "q.title":"FAQ","q1.q":"Is it free?","q1.a":"Yes, completely. The launcher sells nothing and shows no ads.",
-      "q2.q":"My antivirus complains about a game — is that normal?","q2.a":"Windows Defender sometimes removes files from torrents. The launcher checks the installation and warns you if files are missing.",
-      "q3.q":"RuTracker won't open — what now?","q3.a":"The launcher tries to bypass ISP blocking on its own and supports mirrors. If that doesn't help, turn on a VPN.",
+      "q2.q":"My antivirus complains about a game — is that normal?","q2.a":"Windows Defender sometimes removes files from downloaded games. The launcher checks the installation and warns you if files are missing.",
+      "q3.q":"Search won't load — what now?","q3.a":"Check your internet connection and the account sign-in in Settings. Still stuck? Report a bug and attach launcher.log.",
       "q4.q":"How do I update the launcher?","q4.a":"It checks for updates on start and installs them itself; settings and library are kept.",
       "q5.q":"How do I uninstall it?","q5.a":"Via Windows Settings → Apps, like any program. Installed games stay on disk.",
       "end.title":"Ready to try it?","end.sub":"Installation takes less than a minute.","foot.rel":"All versions","foot.note":"RT Launcher is not affiliated with RuTracker, Steam or Valve.",
@@ -429,31 +429,31 @@ footer a{color:var(--muted)}
       "help.kick":"Projekt unterstützen","help.title":"Möchtest du dem Projekt helfen?","help.sub":"Einen Fehler gefunden? Erzähl uns davon. Das dauert ein paar Minuten, und die Lösung bekommen alle.","help.btn":"Fehler melden","help.s1":"<b>Wähle, was kaputt ist</b> — Oberfläche, Download, Installation, Spielstart, Erfolge…","help.s2":"<b>Beschreibe das Problem</b> — was du getan hast, was du erwartet hast und was passiert ist. Die E-Mail wird bei der Google-Anmeldung eingetragen.","help.s3":"<b>Log anhängen</b> (optional) — die Datei <code>launcher.log</code> hilft sehr, die Ursache zu finden.","help.log":"Wo liegt <code>launcher.log</code>: installierte Version — Win+R drücken und <code>%LOCALAPPDATA%\\Programs\\RTLauncher</code> einfügen; portable Version — der Ordner mit <code>RTLauncher.exe</code>.",
       "nav.features":"Funktionen","nav.how":"Loslegen","nav.screens":"Screenshots","nav.faq":"Fragen","dl.short":"Download",
       "share.kick":"Jemand hat ein Spiel mit dir geteilt","share.hint":"Der Browser fragt, ob RT Launcher geöffnet werden soll — erlaube es. Noch kein Launcher? Unten herunterladen.","share.open":"In RT Launcher öffnen","share.src":"Torrent-Seite",
-      "hero.badge":"Kostenlos · Windows 10 und 11","hero.title":"Alle RuTracker-Spiele — <em>in einem Launcher</em>",
-      "hero.lead":"Ein Katalog mit Covern und Screenshots, Download mit einem Klick, automatische Installation und eine Bibliothek zum Starten deiner Spiele — wie Steam, nur für RuTracker.",
+      "hero.badge":"Kostenlos · Windows 10 und 11","hero.title":"Torrents und Spiele — <em>in einem Launcher</em>",
+      "hero.lead":"Torrent-Suche mit Covern und Screenshots, Downloads über qBittorrent, automatische Installation und eine Bibliothek zum Starten deiner Spiele — alles in einem Fenster, wie bei Steam.",
       "dl.main":"Für Windows herunterladen","dl.zip":"Portable Version (ZIP)","meta.ver":"Neueste Version","meta.admin":"Keine Adminrechte nötig","meta.auto":"Aktualisiert sich selbst",
       "st1.b":"1 Klick","st1.s":"von der Spielkarte zum Download","st2.b":"Auto","st2.s":"Entpacken, Installer, ISO","st3.b":"Steam","st3.s":"Cover, Screenshots, Anforderungen","st4.b":"5 Sprachen","st4.s":"Installer und diese Seite",
-      "f.kick":"Funktionen","f.title":"Wozu RT Launcher","f.sub":"RuTracker ist eine riesige Spielebibliothek, aber Torrents suchen, herunterladen, entpacken und starten kostet Zeit. Der Launcher erledigt das für dich.",
-      "f1.h":"Katalog und Suche","f1.p":"Alle Spielebereiche von RuTracker mit Covern, Genres, Seeds und Größe. Sofortsuche mit Vorschlägen und Sortierung.",
+      "f.kick":"Funktionen","f.title":"Wozu RT Launcher","f.sub":"Torrents suchen, Downloads verfolgen, entpacken, installieren und Spiele von Hand starten dauert. Der Launcher erledigt das alles selbst.",
+      "f1.h":"Katalog und Suche","f1.p":"Torrents mit Covern, Genres, Seeds und Größe. Sofortsuche mit Vorschlägen und Sortierung.",
       "f2.h":"Spieleseite wie bei Steam","f2.p":"Screenshots von Steam, Beschreibung, Systemanforderungen und eine Prüfung, ob dein PC das Spiel schafft und genug Speicher hat.",
       "f3.h":"Download mit einem Klick","f3.p":"Der Launcher installiert und konfiguriert qBittorrent, fügt den Torrent hinzu und zeigt Tempo, Fortschritt und Restzeit.",
       "f4.h":"Automatische Installation","f4.p":"Archive (auch mehrteilige und ISO) werden entpackt, Installer laufen in den richtigen Ordner, die Startdatei wird automatisch gefunden.",
       "f5.h":"Bibliothek und Start","f5.p":"Alle Spiele an einem Ort: Spielen-Taste, Spielzeit, zuletzt gespielt, Favoriten und eigene Reihenfolge per Drag & Drop.",
       "f6.h":"Erfolge","f6.p":"Namen und Symbole der Erfolge von Steam, Spieleranteile und ein Pop-up über dem Spiel, wenn du einen freischaltest.",
-      "f7.h":"Spiel-Updates","f7.p":"Neue Version des Torrents? Der Launcher bietet das Update an, lädt es herunter und installiert es drüber.",
+      "f7.h":"Spiel-Updates","f7.p":"Eine neue Version des Torrents ist da — der Launcher lädt selbst nur die geänderten Dateien nach. Die Integritätsprüfung lädt fehlende Dateien neu.",
       "f8.h":"Online spielen","f8.p":"Ein eigener Bereich mit Mehrspieler-Spielen: Der Launcher installiert das Spiel und die Dateien fürs Online-Spiel.",
       "f9.h":"Spiel teilen","f9.p":"Schick einem Freund einen Link — das Spiel öffnet sich direkt in seinem Launcher. Designs, Tastenkürzel und Schnellsuche mit Strg+K.",
       "h.kick":"Loslegen","h.title":"Drei Schritte bis zum Spielen","h.sub":"Beim ersten Start führt dich der Launcher durch die Einrichtung.",
       "s1.h":"Launcher installieren","s1.p":"Installer herunterladen und starten. Keine Adminrechte nötig, danach aktualisiert sich der Launcher selbst.",
-      "s2.h":"Ordner wählen und anmelden","s2.p":"Laufwerk für Spiele wählen und beim RuTracker-Konto anmelden — die Registrierung ist kostenlos.",
+      "s2.h":"Ordner wählen und anmelden","s2.p":"Laufwerk für Spiele wählen und beim Konto des Torrent-Trackers anmelden — der Einrichtungsassistent hilft dabei.",
       "s3.h":"qBittorrent verbinden","s3.p":"Ein Klick: Der Launcher installiert und konfiguriert qBittorrent. Spiel wählen und auf Download drücken.",
       "g.kick":"Screenshots","g.title":"So sieht es aus","g.t1":"Katalog","g.t2":"Spieleseite","g.t3":"Bibliothek","g.t4":"Start",
       "r.title":"Voraussetzungen","r1.b":"Windows 10 oder 11, 64 Bit","r1.s":"Das Fenster nutzt WebView2; ohne es öffnet sich der Launcher in Chrome oder Edge.",
-      "r2.b":"Ein RuTracker-Konto","r2.s":"Ohne Anmeldung erlaubt RuTracker keine Downloads. Die Registrierung ist kostenlos.",
+      "r2.b":"Ein Konto bei einem Torrent-Tracker","r2.s":"Suche und Downloads funktionieren nach der Anmeldung beim Tracker. Die Registrierung ist kostenlos.",
       "r3.b":"qBittorrent","r3.s":"Nicht installiert? Der Launcher installiert und konfiguriert es selbst.","r4.b":"Etwa 100 MB","r4.s":"für den Launcher, plus Platz für Spiele.",
       "q.title":"Häufige Fragen","q1.q":"Ist das kostenlos?","q1.a":"Ja, komplett. Der Launcher verkauft nichts und zeigt keine Werbung.",
-      "q2.q":"Der Virenschutz meckert über ein Spiel — normal?","q2.a":"Windows Defender löscht manchmal Dateien aus Torrents. Der Launcher prüft die Installation und warnt, wenn Dateien fehlen.",
-      "q3.q":"RuTracker öffnet sich nicht — was tun?","q3.a":"Der Launcher versucht Provider-Sperren selbst zu umgehen und unterstützt Spiegel. Hilft das nicht, schalte ein VPN ein.",
+      "q2.q":"Der Virenschutz meckert über ein Spiel — normal?","q2.a":"Windows Defender entfernt manchmal Dateien aus heruntergeladenen Spielen. Der Launcher prüft die Installation und warnt, wenn Dateien fehlen.",
+      "q3.q":"Die Suche lädt nicht — was tun?","q3.a":"Prüfe die Internetverbindung und die Anmeldung in den Einstellungen. Hilft das nicht, melde einen Fehler und hänge launcher.log an.",
       "q4.q":"Wie aktualisiere ich den Launcher?","q4.a":"Er sucht beim Start nach Updates und installiert sie selbst; Einstellungen und Bibliothek bleiben erhalten.",
       "q5.q":"Wie deinstalliere ich ihn?","q5.a":"Über Windows-Einstellungen → Apps, wie jedes Programm. Installierte Spiele bleiben auf der Festplatte.",
       "end.title":"Bereit zum Ausprobieren?","end.sub":"Die Installation dauert weniger als eine Minute.","foot.rel":"Alle Versionen","foot.note":"RT Launcher steht in keiner Verbindung zu RuTracker, Steam oder Valve.",
@@ -464,31 +464,31 @@ footer a{color:var(--muted)}
       "help.kick":"Ayuda al proyecto","help.title":"¿Quieres ayudar al proyecto?","help.sub":"¿Encontraste un error? Cuéntanoslo. Tarda un par de minutos y la corrección llega a todos.","help.btn":"Informar de un error","help.s1":"<b>Elige qué falló</b>: interfaz, descarga, instalación, ejecución de un juego, logros…","help.s2":"<b>Describe el problema</b>: qué hiciste, qué esperabas y qué pasó. Tu correo se rellena al iniciar sesión con Google.","help.s3":"<b>Adjunta el registro</b> (opcional): el archivo <code>launcher.log</code> ayuda mucho a encontrar la causa.","help.log":"Dónde está <code>launcher.log</code>: versión instalada — pulsa Win+R y pega <code>%LOCALAPPDATA%\\Programs\\RTLauncher</code>; versión portátil — la carpeta con <code>RTLauncher.exe</code>.",
       "nav.features":"Funciones","nav.how":"Empezar","nav.screens":"Capturas","nav.faq":"Preguntas","dl.short":"Descargar",
       "share.kick":"Te han compartido un juego","share.hint":"El navegador preguntará si abrir RT Launcher: permítelo. ¿No tienes el lanzador? Descárgalo abajo.","share.open":"Abrir en RT Launcher","share.src":"Página del torrent",
-      "hero.badge":"Gratis · Windows 10 y 11","hero.title":"Todos los juegos de RuTracker — <em>en un solo lanzador</em>",
-      "hero.lead":"Un catálogo con portadas y capturas, descargas en un clic, instalación automática y una biblioteca para lanzar tus juegos: como Steam, pero para RuTracker.",
+      "hero.badge":"Gratis · Windows 10 y 11","hero.title":"Torrents y juegos — <em>en un solo lanzador</em>",
+      "hero.lead":"Búsqueda de torrents con portadas y capturas, descargas con qBittorrent, instalación automática y una biblioteca para lanzar tus juegos: todo en una ventana, como Steam.",
       "dl.main":"Descargar para Windows","dl.zip":"Versión portátil (ZIP)","meta.ver":"Última versión","meta.admin":"Sin permisos de administrador","meta.auto":"Se actualiza solo",
       "st1.b":"1 clic","st1.s":"de la ficha del juego a la descarga","st2.b":"Auto","st2.s":"descompresión, instaladores, ISO","st3.b":"Steam","st3.s":"portadas, capturas, requisitos","st4.b":"5 idiomas","st4.s":"instalador y esta página",
-      "f.kick":"Funciones","f.title":"Para qué sirve RT Launcher","f.sub":"RuTracker es una enorme biblioteca de juegos, pero buscar torrents, descargarlos, descomprimirlos y lanzarlos a mano lleva tiempo. El lanzador lo hace por ti.",
-      "f1.h":"Catálogo y búsqueda","f1.p":"Todas las secciones de juegos de RuTracker con portadas, géneros, semillas y tamaño. Búsqueda instantánea con sugerencias y orden.",
+      "f.kick":"Funciones","f.title":"Para qué sirve RT Launcher","f.sub":"Buscar torrents, seguir las descargas, descomprimir, instalar y lanzar juegos a mano lleva tiempo. El lanzador lo hace todo por ti.",
+      "f1.h":"Catálogo y búsqueda","f1.p":"Torrents con portadas, géneros, semillas y tamaño. Búsqueda instantánea con sugerencias y ordenación.",
       "f2.h":"Página de juego como en Steam","f2.p":"Capturas de Steam, descripción, requisitos del sistema y comprobación de si tu PC lo mueve y si hay espacio en disco.",
       "f3.h":"Descarga en un clic","f3.p":"El lanzador instala y configura qBittorrent, añade el torrent y muestra velocidad, progreso y tiempo restante.",
       "f4.h":"Instalación automática","f4.p":"Los archivos (incluidos multiparte e ISO) se descomprimen, los instaladores se ejecutan en la carpeta correcta y el ejecutable se encuentra solo.",
       "f5.h":"Biblioteca y ejecución","f5.p":"Todos tus juegos en un sitio: botón Jugar, tiempo de juego, última partida, favoritos y orden propio arrastrando.",
       "f6.h":"Logros","f6.p":"Nombres e iconos de logros de Steam, porcentaje de jugadores y un aviso sobre el juego cuando desbloqueas uno.",
-      "f7.h":"Actualizaciones de juegos","f7.p":"¿Hay una versión nueva del torrent? El lanzador ofrece actualizar, la descarga y la instala encima.",
+      "f7.h":"Actualizaciones de juegos","f7.p":"¿Hay una nueva versión del torrent? El lanzador descarga por sí solo solo los archivos cambiados. La comprobación de integridad vuelve a descargar lo que falte.",
       "f8.h":"Juego en línea","f8.p":"Una sección aparte de juegos multijugador: el lanzador instala el juego y los archivos necesarios para jugar en línea.",
       "f9.h":"Compartir un juego","f9.p":"Envía un enlace a un amigo y el juego se abre directamente en su lanzador. Temas, atajos y búsqueda rápida con Ctrl+K.",
       "h.kick":"Empezar","h.title":"Tres pasos y a jugar","h.sub":"En el primer inicio el lanzador te guía por la configuración.",
       "s1.h":"Instala el lanzador","s1.p":"Descarga el instalador y ejecútalo. No requiere permisos de administrador y luego se actualiza solo.",
-      "s2.h":"Elige carpeta e inicia sesión","s2.p":"Elige un disco para los juegos e inicia sesión en tu cuenta de RuTracker; el registro es gratuito.",
+      "s2.h":"Elige carpeta e inicia sesión","s2.p":"Elige un disco para los juegos e inicia sesión en tu cuenta del tracker de torrents; el asistente de configuración te guía.",
       "s3.h":"Conecta qBittorrent","s3.p":"Un botón: el lanzador instala y configura qBittorrent. Elige un juego y pulsa Descargar.",
       "g.kick":"Capturas","g.title":"Así se ve","g.t1":"Catálogo","g.t2":"Página del juego","g.t3":"Biblioteca","g.t4":"Inicio",
       "r.title":"Requisitos","r1.b":"Windows 10 u 11, 64 bits","r1.s":"La ventana usa WebView2; sin él, el lanzador se abre en Chrome o Edge.",
-      "r2.b":"Una cuenta de RuTracker","r2.s":"RuTracker solo permite descargar con sesión iniciada. El registro es gratuito.",
+      "r2.b":"Una cuenta en un tracker de torrents","r2.s":"La búsqueda y las descargas funcionan tras iniciar sesión en el tracker. El registro es gratuito.",
       "r3.b":"qBittorrent","r3.s":"¿No está instalado? El lanzador lo instala y configura por ti.","r4.b":"Unos 100 MB","r4.s":"para el lanzador, más espacio para juegos.",
       "q.title":"Preguntas frecuentes","q1.q":"¿Es gratis?","q1.a":"Sí, totalmente. El lanzador no vende nada ni muestra anuncios.",
-      "q2.q":"El antivirus se queja de un juego, ¿es normal?","q2.a":"Windows Defender a veces borra archivos de los torrents. El lanzador revisa la instalación y avisa si faltan archivos.",
-      "q3.q":"RuTracker no abre, ¿qué hago?","q3.a":"El lanzador intenta saltarse el bloqueo del proveedor por sí solo y admite espejos. Si no basta, activa una VPN.",
+      "q2.q":"El antivirus se queja de un juego, ¿es normal?","q2.a":"Windows Defender a veces elimina archivos de los juegos descargados. El lanzador comprueba la instalación y avisa si faltan archivos.",
+      "q3.q":"La búsqueda no carga, ¿qué hago?","q3.a":"Comprueba la conexión a internet y el inicio de sesión en Ajustes. ¿Sigue igual? Informa del error y adjunta launcher.log.",
       "q4.q":"¿Cómo actualizo el lanzador?","q4.a":"Busca actualizaciones al iniciarse y las instala solo; la configuración y la biblioteca se conservan.",
       "q5.q":"¿Cómo lo desinstalo?","q5.a":"Desde Configuración de Windows → Aplicaciones, como cualquier programa. Los juegos instalados se quedan en el disco.",
       "end.title":"¿Listo para probarlo?","end.sub":"La instalación tarda menos de un minuto.","foot.rel":"Todas las versiones","foot.note":"RT Launcher no está afiliado a RuTracker, Steam ni Valve.",
@@ -499,31 +499,31 @@ footer a{color:var(--muted)}
       "help.kick":"Aider le projet","help.title":"Envie d'aider le projet ?","help.sub":"Vous avez trouvé un bug ? Dites-le-nous. Ça prend deux minutes et la correction profite à tous.","help.btn":"Signaler un bug","help.s1":"<b>Choisissez ce qui ne va pas</b> — interface, téléchargement, installation, lancement d'un jeu, succès…","help.s2":"<b>Décrivez le problème</b> — ce que vous avez fait, ce que vous attendiez et ce qui s'est passé. L'e-mail est rempli via la connexion Google.","help.s3":"<b>Joignez le journal</b> (facultatif) — le fichier <code>launcher.log</code> aide beaucoup à trouver la cause.","help.log":"Où se trouve <code>launcher.log</code> : version installée — Win+R puis collez <code>%LOCALAPPDATA%\\Programs\\RTLauncher</code> ; version portable — le dossier contenant <code>RTLauncher.exe</code>.",
       "nav.features":"Fonctions","nav.how":"Démarrer","nav.screens":"Captures","nav.faq":"Questions","dl.short":"Télécharger",
       "share.kick":"On vous a partagé un jeu","share.hint":"Le navigateur va demander d'ouvrir RT Launcher — acceptez. Pas encore de lanceur ? Téléchargez-le ci-dessous.","share.open":"Ouvrir dans RT Launcher","share.src":"Page du torrent",
-      "hero.badge":"Gratuit · Windows 10 et 11","hero.title":"Tous les jeux RuTracker — <em>dans un seul lanceur</em>",
-      "hero.lead":"Un catalogue avec jaquettes et captures, téléchargement en un clic, installation automatique et une bibliothèque pour lancer vos jeux — comme Steam, mais pour RuTracker.",
+      "hero.badge":"Gratuit · Windows 10 et 11","hero.title":"Torrents et jeux — <em>dans un seul lanceur</em>",
+      "hero.lead":"Recherche de torrents avec jaquettes et captures, téléchargements via qBittorrent, installation automatique et une bibliothèque pour lancer vos jeux — tout dans une seule fenêtre, comme Steam.",
       "dl.main":"Télécharger pour Windows","dl.zip":"Version portable (ZIP)","meta.ver":"Dernière version","meta.admin":"Sans droits administrateur","meta.auto":"Se met à jour tout seul",
       "st1.b":"1 clic","st1.s":"de la fiche du jeu au téléchargement","st2.b":"Auto","st2.s":"décompression, installeurs, ISO","st3.b":"Steam","st3.s":"jaquettes, captures, configuration","st4.b":"5 langues","st4.s":"installeur et cette page",
-      "f.kick":"Fonctions","f.title":"À quoi sert RT Launcher","f.sub":"RuTracker est une immense bibliothèque de jeux, mais chercher les torrents, télécharger, décompresser et lancer à la main prend du temps. Le lanceur s'en charge.",
-      "f1.h":"Catalogue et recherche","f1.p":"Toutes les sections jeux de RuTracker avec jaquettes, genres, seeds et taille. Recherche instantanée avec suggestions et tri.",
+      "f.kick":"Fonctions","f.title":"À quoi sert RT Launcher","f.sub":"Chercher des torrents, suivre les téléchargements, décompresser, installer et lancer les jeux à la main prend du temps. Le lanceur fait tout cela pour vous.",
+      "f1.h":"Catalogue et recherche","f1.p":"Des torrents avec jaquettes, genres, seeds et taille. Recherche instantanée avec suggestions et tri.",
       "f2.h":"Page de jeu façon Steam","f2.p":"Captures Steam, description, configuration requise et vérification : votre PC le fera-t-il tourner, reste-t-il de la place ?",
       "f3.h":"Téléchargement en un clic","f3.p":"Le lanceur installe et configure qBittorrent, ajoute le torrent et affiche vitesse, progression et temps restant.",
       "f4.h":"Installation automatique","f4.p":"Les archives (y compris multi-volumes et ISO) sont décompressées, les installeurs lancés dans le bon dossier, l'exécutable trouvé automatiquement.",
       "f5.h":"Bibliothèque et lancement","f5.p":"Tous vos jeux au même endroit : bouton Jouer, temps de jeu, dernière session, favoris et ordre personnalisé par glisser-déposer.",
       "f6.h":"Succès","f6.p":"Noms et icônes des succès depuis Steam, pourcentage de joueurs et une notification par-dessus le jeu quand vous en débloquez un.",
-      "f7.h":"Mises à jour des jeux","f7.p":"Nouvelle version du torrent ? Le lanceur propose la mise à jour, la télécharge et l'installe par-dessus.",
+      "f7.h":"Mises à jour des jeux","f7.p":"Nouvelle version du torrent ? Le lanceur télécharge lui-même uniquement les fichiers modifiés. La vérification d'intégrité retélécharge ce qui manque.",
       "f8.h":"Jeu en ligne","f8.p":"Une section dédiée aux jeux multijoueurs : le lanceur installe le jeu et les fichiers nécessaires pour jouer en ligne.",
       "f9.h":"Partager un jeu","f9.p":"Envoyez un lien à un ami : le jeu s'ouvre directement dans son lanceur. Thèmes, raccourcis et recherche rapide avec Ctrl+K.",
       "h.kick":"Démarrer","h.title":"Trois étapes et c'est parti","h.sub":"Au premier lancement, le lanceur vous guide dans la configuration.",
       "s1.h":"Installez le lanceur","s1.p":"Téléchargez l'installeur et lancez-le. Aucun droit administrateur requis, ensuite le lanceur se met à jour seul.",
-      "s2.h":"Choisissez un dossier et connectez-vous","s2.p":"Choisissez un disque pour les jeux et connectez-vous à votre compte RuTracker — l'inscription est gratuite.",
+      "s2.h":"Choisissez un dossier et connectez-vous","s2.p":"Choisissez un disque pour les jeux et connectez-vous à votre compte du tracker de torrents — l'assistant de configuration vous guide.",
       "s3.h":"Connectez qBittorrent","s3.p":"Un seul bouton : le lanceur installe et configure qBittorrent. Choisissez un jeu et cliquez sur Télécharger.",
       "g.kick":"Captures","g.title":"À quoi ça ressemble","g.t1":"Catalogue","g.t2":"Page du jeu","g.t3":"Bibliothèque","g.t4":"Accueil",
       "r.title":"Configuration","r1.b":"Windows 10 ou 11, 64 bits","r1.s":"La fenêtre utilise WebView2 ; sans lui, le lanceur s'ouvre dans Chrome ou Edge.",
-      "r2.b":"Un compte RuTracker","r2.s":"RuTracker n'autorise les téléchargements qu'une fois connecté. L'inscription est gratuite.",
+      "r2.b":"Un compte sur un tracker de torrents","r2.s":"La recherche et les téléchargements fonctionnent une fois connecté au tracker. L'inscription est gratuite.",
       "r3.b":"qBittorrent","r3.s":"Pas installé ? Le lanceur l'installe et le configure pour vous.","r4.b":"Environ 100 Mo","r4.s":"pour le lanceur, plus la place pour les jeux.",
       "q.title":"Questions fréquentes","q1.q":"C'est gratuit ?","q1.a":"Oui, entièrement. Le lanceur ne vend rien et n'affiche pas de publicité.",
-      "q2.q":"L'antivirus signale un jeu — normal ?","q2.a":"Windows Defender supprime parfois des fichiers des torrents. Le lanceur vérifie l'installation et prévient s'il manque des fichiers.",
-      "q3.q":"RuTracker ne s'ouvre pas — que faire ?","q3.a":"Le lanceur essaie de contourner seul le blocage du fournisseur et prend en charge les miroirs. Sinon, activez un VPN.",
+      "q2.q":"L'antivirus signale un jeu — normal ?","q2.a":"Windows Defender supprime parfois des fichiers des jeux téléchargés. Le lanceur vérifie l'installation et prévient s'il manque des fichiers.",
+      "q3.q":"La recherche ne se charge pas — que faire ?","q3.a":"Vérifiez la connexion internet et la connexion au compte dans les Paramètres. Toujours rien ? Signalez un bug et joignez launcher.log.",
       "q4.q":"Comment mettre à jour le lanceur ?","q4.a":"Il cherche les mises à jour au démarrage et les installe seul ; paramètres et bibliothèque sont conservés.",
       "q5.q":"Comment le désinstaller ?","q5.a":"Via Paramètres Windows → Applications, comme n'importe quel programme. Les jeux installés restent sur le disque.",
       "end.title":"Prêt à essayer ?","end.sub":"L'installation prend moins d'une minute.","foot.rel":"Toutes les versions","foot.note":"RT Launcher n'est pas affilié à RuTracker, Steam ou Valve.",
@@ -653,7 +653,7 @@ footer a{color:var(--muted)}
     var params = (t ? "t=" + t : "ofx=" + encodeURIComponent(ofx)) + (name ? "&n=" + encodeURIComponent(name) : "");
     var app = "rtlauncher://game?" + params;
     document.getElementById("shared").hidden = false;
-    document.getElementById("sharedTitle").textContent = name || (t ? "RuTracker #" + t : ofx);
+    document.getElementById("sharedTitle").textContent = name || (t ? "#" + t : ofx);
     document.getElementById("sharedOpen").href = app;
     document.getElementById("sharedSrc").href = t ? "https://rutracker.org/forum/viewtopic.php?t=" + t : "https://online-fix.me/" + ofx;
     if (name) document.title = name + " — RT Launcher";
