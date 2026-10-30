@@ -149,6 +149,19 @@ details p{margin:8px 0 0;color:var(--muted);font-size:14.5px}
 .help li b{color:var(--text);font-weight:600}
 .logbox{margin-top:16px;padding:14px 16px;border-radius:14px;background:var(--bg2);border:1px solid var(--line);font-size:13.5px;color:var(--muted)}
 .logbox code{font:500 12.5px ui-monospace,Consolas,monospace;color:var(--text);background:var(--card2);padding:2px 6px;border-radius:6px;word-break:break-all}
+.donate{display:grid;grid-template-columns:1.3fr auto;gap:32px;align-items:center;padding:34px;border-radius:24px;background:linear-gradient(135deg,rgba(38,161,123,.12),rgba(232,93,4,.05) 60%),var(--card);border:1px solid var(--line2)}
+.donate h2{font-size:clamp(24px,3vw,34px);letter-spacing:-.03em;line-height:1.15;margin:8px 0 10px}
+.donate>div>p{color:var(--muted);margin:0 0 18px}
+.donate .net{display:inline-flex;align-items:center;gap:9px;padding:6px 12px 6px 6px;border-radius:99px;background:rgba(38,161,123,.12);border:1px solid rgba(38,161,123,.35);font-size:13.5px;font-weight:600;color:#7fe0bd;margin-bottom:12px}
+.donate .coin{width:24px;height:24px;border-radius:50%;background:#26a17b;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+.donate .addr{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.donate code{font:600 15px ui-monospace,Consolas,monospace;color:var(--text);background:var(--bg2);border:1px solid var(--line);padding:11px 14px;border-radius:12px;word-break:break-all;user-select:all}
+.donate .btn.done{border-color:rgba(62,207,142,.5);color:var(--ok)}
+.donate .warn{margin:14px 0 0;font-size:13px;color:var(--dim)}
+.donate .warn b{color:var(--muted)}
+.qrbox{display:flex;flex-direction:column;align-items:center;gap:10px;font-size:12.5px;color:var(--muted);text-align:center}
+.qrbox svg{width:168px;height:168px;border-radius:14px;box-shadow:0 20px 40px -18px rgba(0,0,0,.8)}
+@media (max-width:760px){.donate{grid-template-columns:1fr;padding:24px}.qrbox{order:-1}}
 .help .btn.ok{background:linear-gradient(180deg,#46dd9a,#2bb67a);border-color:transparent;color:#05140d;box-shadow:0 12px 30px -10px rgba(62,207,142,.6)}
 @media (max-width:860px){.help{grid-template-columns:1fr;padding:24px}}
 .final{margin:90px 0 0;padding:56px 28px;border-radius:24px;text-align:center;background:radial-gradient(120% 140% at 50% 0%,rgba(232,93,4,.35),transparent 60%),var(--card);border:1px solid var(--line2)}
@@ -332,6 +345,25 @@ footer a{color:var(--muted)}
       <a class="btn primary big dl" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span data-i="dl.main">Скачать для Windows</span></a>
     </div>
   </div>
+
+  <section class="sec" id="donate">
+    <div class="wrap">
+      <div class="donate reveal">
+        <div>
+          <div class="kick" style="color:#3ecf8e" data-i="don.kick">Поддержать проект</div>
+          <h2 data-i="don.title">Нравится лаунчер? Поддержите разработку</h2>
+          <p data-i="don.sub">RT Launcher бесплатный и без рекламы. Если он вам пригодился, можно отправить любую сумму в USDT — это помогает развивать проект.</p>
+          <div class="net"><span class="coin">₮</span><span data-i="don.net">Tether USDT · сеть TRON (TRC-20)</span></div>
+          <div class="addr">
+            <code id="wallet">TBZMKUMMzRStEPUJvrXhTxWrHhe4Mpd8w4</code>
+            <button class="btn sm" id="copyWallet" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-i="don.copy">Скопировать адрес</span></button>
+          </div>
+          <p class="warn" data-i="don.warn" data-html>Отправляйте только <b>USDT в сети TRON (TRC-20)</b> — переводы из других сетей (ERC-20, BEP-20 и т. д.) на этот адрес не дойдут.</p>
+        </div>
+        <div class="qrbox"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" class="qr" role="img" aria-label="QR-код адреса USDT TRC-20"><path fill="#fff" d="M0 0h33v33h-33z"/><path stroke="#0b0c10" d="M2 2.5h7m7 0h1m7 0h7m-29 1h1m5 0h1m1 0h1m2 0h3m4 0h2m2 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m3 0h1m4 0h1m4 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m2 0h2m4 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h2m1 0h3m2 0h1m2 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m3 0h1m3 0h2m3 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-20 1h2m1 0h1m2 0h1m1 0h1m1 0h2m-21 1h1m1 0h1m1 0h1m1 0h1m2 0h3m4 0h1m7 0h1m2 0h1m-25 1h2m2 0h1m4 0h2m1 0h1m3 0h3m4 0h2m-28 1h1m2 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h5m-28 1h1m2 0h2m3 0h1m2 0h6m1 0h1m7 0h2m-29 1h1m3 0h3m1 0h1m1 0h3m1 0h1m2 0h1m1 0h5m2 0h1m-27 1h1m3 0h2m2 0h3m1 0h1m1 0h1m5 0h1m4 0h2m-27 1h5m1 0h4m2 0h2m4 0h1m1 0h1m1 0h2m1 0h1m1 0h2m-29 1h1m3 0h1m2 0h1m2 0h2m4 0h2m1 0h1m1 0h1m1 0h1m3 0h2m-28 1h2m1 0h1m1 0h3m1 0h1m1 0h1m4 0h1m1 0h1m1 0h6m1 0h1m-26 1h2m8 0h1m2 0h2m1 0h2m6 0h1m-28 1h1m1 0h7m1 0h3m1 0h1m1 0h1m3 0h3m2 0h4m-28 1h4m4 0h1m3 0h3m1 0h2m4 0h1m3 0h1m-28 1h1m2 0h1m2 0h2m3 0h1m2 0h2m1 0h2m1 0h5m1 0h3m-21 1h1m2 0h1m2 0h1m2 0h2m1 0h1m3 0h1m1 0h1m-27 1h7m2 0h5m2 0h1m2 0h2m1 0h1m1 0h5m-29 1h1m5 0h1m8 0h3m2 0h1m3 0h1m2 0h2m-29 1h1m1 0h3m1 0h1m1 0h2m1 0h1m4 0h1m3 0h5m1 0h1m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m2 0h1m2 0h2m5 0h3m-29 1h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h2m1 0h5m1 0h1m-29 1h1m5 0h1m4 0h2m2 0h1m1 0h2m1 0h5m2 0h1m-28 1h7m1 0h2m1 0h3m3 0h1m1 0h2m4 0h1m1 0h2"/></svg><span data-i="don.qr">Отсканируйте в криптокошельке</span></div>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -390,6 +422,7 @@ footer a{color:var(--muted)}
       "q4.q":"How do I update the launcher?","q4.a":"It checks for updates on start and installs them itself; settings and library are kept.",
       "q5.q":"How do I uninstall it?","q5.a":"Via Windows Settings → Apps, like any program. Installed games stay on disk.",
       "end.title":"Ready to try it?","end.sub":"Installation takes less than a minute.","foot.rel":"All versions","foot.note":"RT Launcher is not affiliated with RuTracker, Steam or Valve.",
+      "don.kick":"Support the project","don.title":"Like the launcher? Support its development","don.sub":"RT Launcher is free and ad-free. If you find it useful, you can send any amount in USDT — it helps the project grow.","don.net":"Tether USDT · TRON network (TRC-20)","don.copy":"Copy address","don.copied":"Copied","don.warn":"Send only <b>USDT on the TRON network (TRC-20)</b> — transfers from other networks (ERC-20, BEP-20, etc.) to this address will be lost.","don.qr":"Scan with your crypto wallet",
       "ver":"Version {v} · {mb} MB"
     },
     de: {
@@ -424,6 +457,7 @@ footer a{color:var(--muted)}
       "q4.q":"Wie aktualisiere ich den Launcher?","q4.a":"Er sucht beim Start nach Updates und installiert sie selbst; Einstellungen und Bibliothek bleiben erhalten.",
       "q5.q":"Wie deinstalliere ich ihn?","q5.a":"Über Windows-Einstellungen → Apps, wie jedes Programm. Installierte Spiele bleiben auf der Festplatte.",
       "end.title":"Bereit zum Ausprobieren?","end.sub":"Die Installation dauert weniger als eine Minute.","foot.rel":"Alle Versionen","foot.note":"RT Launcher steht in keiner Verbindung zu RuTracker, Steam oder Valve.",
+      "don.kick":"Projekt unterstützen","don.title":"Gefällt dir der Launcher? Unterstütze die Entwicklung","don.sub":"RT Launcher ist kostenlos und werbefrei. Wenn er dir nützt, kannst du einen beliebigen Betrag in USDT senden — das hilft dem Projekt.","don.net":"Tether USDT · TRON-Netzwerk (TRC-20)","don.copy":"Adresse kopieren","don.copied":"Kopiert","don.warn":"Sende nur <b>USDT im TRON-Netzwerk (TRC-20)</b> — Überweisungen aus anderen Netzwerken (ERC-20, BEP-20 usw.) an diese Adresse gehen verloren.","don.qr":"Mit der Krypto-Wallet scannen",
       "ver":"Version {v} · {mb} MB"
     },
     es: {
@@ -458,6 +492,7 @@ footer a{color:var(--muted)}
       "q4.q":"¿Cómo actualizo el lanzador?","q4.a":"Busca actualizaciones al iniciarse y las instala solo; la configuración y la biblioteca se conservan.",
       "q5.q":"¿Cómo lo desinstalo?","q5.a":"Desde Configuración de Windows → Aplicaciones, como cualquier programa. Los juegos instalados se quedan en el disco.",
       "end.title":"¿Listo para probarlo?","end.sub":"La instalación tarda menos de un minuto.","foot.rel":"Todas las versiones","foot.note":"RT Launcher no está afiliado a RuTracker, Steam ni Valve.",
+      "don.kick":"Apoya el proyecto","don.title":"¿Te gusta el lanzador? Apoya su desarrollo","don.sub":"RT Launcher es gratuito y sin anuncios. Si te resulta útil, puedes enviar cualquier cantidad en USDT: ayuda a que el proyecto crezca.","don.net":"Tether USDT · red TRON (TRC-20)","don.copy":"Copiar dirección","don.copied":"Copiado","don.warn":"Envía solo <b>USDT en la red TRON (TRC-20)</b>: las transferencias desde otras redes (ERC-20, BEP-20, etc.) a esta dirección se perderán.","don.qr":"Escanéalo con tu monedero cripto",
       "ver":"Versión {v} · {mb} MB"
     },
     fr: {
@@ -492,6 +527,7 @@ footer a{color:var(--muted)}
       "q4.q":"Comment mettre à jour le lanceur ?","q4.a":"Il cherche les mises à jour au démarrage et les installe seul ; paramètres et bibliothèque sont conservés.",
       "q5.q":"Comment le désinstaller ?","q5.a":"Via Paramètres Windows → Applications, comme n'importe quel programme. Les jeux installés restent sur le disque.",
       "end.title":"Prêt à essayer ?","end.sub":"L'installation prend moins d'une minute.","foot.rel":"Toutes les versions","foot.note":"RT Launcher n'est pas affilié à RuTracker, Steam ou Valve.",
+      "don.kick":"Soutenir le projet","don.title":"Le lanceur vous plaît ? Soutenez son développement","don.sub":"RT Launcher est gratuit et sans publicité. S'il vous est utile, vous pouvez envoyer le montant de votre choix en USDT — cela aide le projet à avancer.","don.net":"Tether USDT · réseau TRON (TRC-20)","don.copy":"Copier l'adresse","don.copied":"Copié","don.warn":"Envoyez uniquement des <b>USDT sur le réseau TRON (TRC-20)</b> — les transferts depuis d'autres réseaux (ERC-20, BEP-20, etc.) vers cette adresse seront perdus.","don.qr":"Scannez avec votre portefeuille crypto",
       "ver":"Version {v} · {mb} Mo"
     }
   };
@@ -500,6 +536,7 @@ footer a{color:var(--muted)}
   var RU = {};
   document.querySelectorAll("[data-i]").forEach(function (el) { RU[el.getAttribute("data-i")] = el.hasAttribute("data-html") ? el.innerHTML : el.textContent; });
   RU.ver = "Версия {v} · {mb} МБ";
+  RU["don.copied"] = "Скопировано";
 
   var release = null;
   function pick() {
@@ -567,6 +604,22 @@ footer a{color:var(--muted)}
     if (!setup && zip) document.querySelectorAll(".dl").forEach(function (a) { a.href = zip.browser_download_url; });
     offer(j.tag_name.replace(/^v/, ""), Math.round(size / 1048576));
   }).catch(function () {});
+
+  // Поддержать проект: копирование адреса кошелька
+  var copyBtn = document.getElementById("copyWallet");
+  copyBtn.onclick = function () {
+    var code = document.getElementById("wallet"), label = copyBtn.querySelector("span");
+    var done = function () {
+      label.textContent = tr("don.copied"); copyBtn.classList.add("done");
+      setTimeout(function () { label.textContent = tr("don.copy"); copyBtn.classList.remove("done"); }, 2000);
+    };
+    var fallback = function () {
+      var r = document.createRange(); r.selectNodeContents(code);
+      var sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      try { if (document.execCommand("copy")) done(); } catch (e) {}
+    };
+    if (navigator.clipboard) navigator.clipboard.writeText(code.textContent.trim()).then(done, fallback); else fallback();
+  };
 
   // Галерея
   var tabs = document.querySelectorAll("#tabs .tab");
