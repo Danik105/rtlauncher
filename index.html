@@ -546,16 +546,26 @@ footer a{color:var(--muted)}
   // Скачать — установщик последней версии
   document.querySelectorAll(".dl").forEach(function (a) { a.href = SETUP; });
 
-  // Версия и размер с GitHub
+  // Версия и размер: version.json рядом со страницей (его пишет make_release.py; без лимитов) и API GitHub
+  // (без токена — 60 запросов в час на IP, за VPN — на всех его пользователей). Показываем более новую
+  function newer(v) {
+    if (!release) return true;
+    var a = v.split("."), b = release.v.split(".");
+    for (var i = 0; i < 3; i++) { if ((+a[i] || 0) !== (+b[i] || 0)) return (+a[i] || 0) > (+b[i] || 0); }
+    return false;
+  }
+  function offer(v, mb) { if (v && newer(v)) { release = { v: v, mb: mb || 0 }; showVersion(); } }
+  fetch("version.json", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+    if (j && j.version) offer(String(j.version), j.setup_mb || j.zip_mb);
+  }).catch(function () {});
   fetch("https://api.github.com/repos/Danik105/rtlauncher/releases/latest").then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
     if (!j || !j.tag_name) return;
     var setup = (j.assets || []).filter(function (a) { return a.name === "RTLauncher-Setup.exe"; })[0];
     var zip = (j.assets || []).filter(function (a) { return a.name === "RTLauncher.zip"; })[0];
     var size = (setup || zip || {}).size || 0;
-    release = { v: j.tag_name.replace(/^v/, ""), mb: Math.round(size / 1048576) };
     // Старые выпуски без установщика — тогда кнопка ведёт на ZIP
     if (!setup && zip) document.querySelectorAll(".dl").forEach(function (a) { a.href = zip.browser_download_url; });
-    showVersion();
+    offer(j.tag_name.replace(/^v/, ""), Math.round(size / 1048576));
   }).catch(function () {});
 
   // Галерея
